@@ -854,4 +854,96 @@ Object.assign(TIPS,{
  bex:['Abrir exemplo','Carrega uma edição pronta para você explorar e modificar.']});
 setK();render();
 })();
+</script><!-- RODADA 5 · MENOS É MAIS (modo iniciante mais simples)
+     Cole este bloco DEPOIS do bloco da Rodada 4 e ANTES de </body>.
+     Só altera a aparência/organização no MODO INICIANTE (e o cabeçalho, nos dois modos).
+     Para desfazer, basta apagar este bloco. -->
+<style>
+.bar>.mu{display:none}
+.brand{flex:1}
+#bexp{white-space:nowrap}
+#mw{position:relative;margin-left:auto}
+#mm{position:absolute;right:0;top:100%;margin-top:4px;background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:8px;display:none;flex-direction:column;gap:6px;z-index:60;min-width:220px;box-shadow:0 8px 24px #0006}
+#mm.open{display:flex}
+#mm>button{text-align:left;width:100%}
+#mm .mr{display:flex;gap:8px;align-items:center}
+#bt{display:none;padding:6px 10px;font-weight:600;border-bottom:1px solid var(--bd)}
+#stp{display:none;align-items:center;gap:6px;flex-wrap:wrap}
+#stp i{font-style:normal;padding:2px 8px;border-radius:12px;background:var(--pn);border:1px solid var(--bd);color:var(--mu)}
+#stp i.done{color:var(--ok);border-color:var(--ok)}
+#stp i.done:before{content:"✓ "}
+#stp i.cur{color:#fff;background:var(--ac);border-color:var(--ac)}
+#stn{flex-basis:100%;color:var(--tx);font-weight:600}
+#empty button{pointer-events:auto;margin-top:6px}
+@keyframes nd{50%{box-shadow:0 0 0 6px #ffd23faa}}
+.nudge,.ad.nudge{animation:nd 1s infinite;outline:2px solid #ffd23f;outline-offset:1px}
+@media (prefers-reduced-motion:reduce){.nudge{animation:none}}
+/* só no modo iniciante */
+.beg #stp,.beg #bt{display:flex}
+.beg #bt{display:block}
+.beg #bin>.ph{display:none}
+.beg #rc,.beg .tlh label,.beg #bhint,.beg .lh{display:none}
+.beg #hbt small:nth-of-type(2){display:none}
+.beg .pf .hint:not(#msg){display:none}
+.beg #mtxt.cap small{display:none}
+.beg .ad{padding:6px 12px;font-size:calc(13px*var(--k,1))}
+</style>
+<script>
+(function(){
+// ---------- 1. Cabeçalho enxuto: só "Como usar", "Mais" e "Exportar" ficam à vista ----------
+$('#btour').textContent='❓ Como usar';
+const mw=document.createElement('div');mw.id='mw';
+const mb=document.createElement('button');mb.id='bmore';mb.textContent='⋯ Mais';
+const mm=document.createElement('div');mm.id='mm';
+const sr=document.createElement('div');sr.className='mr';
+const sl=document.createElement('span');sl.textContent='Sons de conclusão';
+sr.append($('#bsnd'),sl);
+mm.append($('#bmode'),$('#bhelp'),sr,$('#bgl'),$('#bfs'),$('#brec'));
+mw.append(mb,mm);$('#bexp').before(mw);
+mb.onclick=()=>mm.classList.toggle('open');
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mw'))mm.classList.remove('open')});
+mm.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.id!=='bsnd'&&b.id!=='bfs')mm.classList.remove('open')});
+TIPS.bmore=['Mais opções','Modo iniciante/completo, atalhos, sons, glossário, tamanho do texto e recomeçar.'];
+
+// ---------- 2. Painel da esquerda: título simples no lugar das abas ----------
+const bt=document.createElement('div');bt.id='bt';bt.textContent='Seus clipes';
+$('#bin>.ph').after(bt);
+$('#imp').textContent='📁 Usar meus arquivos';
+
+// ---------- 3. Timeline vazia: um único convite, com atalho para o exemplo ----------
+$('#empty').innerHTML='<b>Linha do tempo vazia</b><br>Clique em <b>＋ Adicionar</b> em um clipe da lista à esquerda.<br><button id="bex2">📂 Ou abra um exemplo pronto</button>';
+$('#bex2').onclick=()=>$('#bex').click();
+
+// ---------- 4. Passo a passo com marcação automática e botão piscando ----------
+const stp=document.createElement('span');stp.id='stp';
+stp.innerHTML='<b>Passo a passo:</b> <i>1 Adicionar</i> › <i>2 Reproduzir</i> › <i>3 Cortar</i> › <i>4 Exportar</i><span id="stn"></span>';
+$('.tlh').appendChild(stp);
+let D1=0,D2=0;
+$('#play').addEventListener('click',()=>{if(items.length)D2=1});
+const MSG=['Clique em ＋ Adicionar em um clipe da lista.','Clique em ▶ para reproduzir.','Clique em ✂ Cortar e depois em cima do clipe.','Clique em Exportar vídeo.'];
+function step5(){
+ document.querySelectorAll('.nudge').forEach(x=>x.classList.remove('nudge'));
+ if(!document.body.classList.contains('beg'))return;
+ if(items.length)D1=1;if(timer)D2=1;
+ const d=[D1,D2,!!F.cut,!!F.exp],c=d.findIndex(x=>!x);
+ document.querySelectorAll('#stp i').forEach((e,i)=>{e.className=d[i]?'done':i===c?'cur':''});
+ $('#stn').textContent=c<0?'🎉 Você completou os 4 passos! Agora mova e apague clipes, ou ative o Modo completo em ⋯ Mais.':MSG[c];
+ if(ts>=0)return;
+ const tg=c===0?document.querySelectorAll('#binl .ad'):c===1?[$('#play')]:c===2?[$('#bc')]:c===3?[$('#bexp')]:[];
+ tg.forEach(x=>x.classList.add('nudge'))}
+setInterval(step5,500);
+
+// ---------- 5. Tour curto de 4 passos para o modo iniciante ----------
+const MINI2=[
+ {t:'Bem-vindo! 🎬',p:'Editar vídeo é juntar pedaços (clipes) em uma linha do tempo. Vamos fazer 4 passos rápidos.',b:'Vamos lá'},
+ {s:'#binl',t:'1. Adicione um clipe',p:'Clique em ＋ Adicionar ao lado de um clipe da lista. Ele vai para a linha do tempo.',go:()=>{tab('pj');return{n:items.length}},ok:b=>items.length>b.n},
+ {s:'#play',t:'2. Reproduza',p:'Clique em ▶ para ver o resultado no monitor.',go:()=>{need();return{t}},ok:b=>timer||t!==b.t},
+ {s:'#bc',t:'3. Corte o clipe',p:'Clique em ✂ Cortar e depois em cima do clipe. Ele vira dois pedaços. Para mover de novo, use Selecionar.',go:()=>{need();return{n:items.length}},ok:b=>items.length>b.n},
+ {s:'#bexp',t:'4. Exporte',p:'Quando terminar, clique em Exportar vídeo para gerar o arquivo. Por enquanto, só saiba onde fica.',b:'Entendi'},
+ {t:'Pronto! 🏆',p:'Você já sabe o básico. Passe o mouse (ou toque) nos botões para ver a função de cada um. Em ⋯ Mais ficam o glossário, os atalhos e o tamanho do texto.',b:'Concluir'}];
+const t0=tour;
+tour=function(on){
+ if(on&&document.body.classList.contains('beg'))STEPS.splice(0,STEPS.length,...MINI2);
+ return t0(on)};
+})();
 </script></body></html>
