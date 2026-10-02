@@ -711,4 +711,28 @@ rb.onclick=()=>{
 
 upd();pos();
 })();
+</script><!-- RODADA 3 · MÍDIA DE EXEMPLO COM VÍDEO DE VERDADE
+     1) Suba praia.mp4, praia2.mp4 e floresta.mp4 na MESMA pasta do index.html (repositório premiereteste).
+     2) Cole este bloco DEPOIS dos blocos das Rodadas 1 e 2 e ANTES de </body>.
+     Se os arquivos não forem encontrados, o simulador volta sozinho aos blocos coloridos. -->
+<script>
+(function(){
+const M={
+ a:{n:'Praia (orla)',u:'praia.mp4',d:10},
+ b:{n:'Praia (costa)',u:'praia2.mp4',d:8},
+ c:{n:'Floresta (drone)',u:'floresta.mp4',d:6.2}};
+Object.keys(M).forEach(k=>{
+ const s=SRC.find(x=>x.id===k);if(!s)return;
+ const o={n:s.n,d:s.d};
+ s.n=M[k].n;s.d=M[k].d;s.url=M[k].u;s.k='v';
+ // se o arquivo não existir (ou abrir fora do GitHub Pages), volta ao bloco colorido
+ fetch(M[k].u,{method:'HEAD'}).then(r=>{if(!r.ok)throw 0}).catch(()=>{
+  delete s.url;s.n=o.n;s.d=o.d;renderBin();render()})});
+// carrega o vídeo com antecedência para o arraste na timeline ficar suave
+['V1','V2','V3'].forEach(id=>{layer(id).v.preload='auto'});
+// o desafio "Corrija a edição" usava um clipe de 12 s; a floresta tem 6,2 s
+const fx=CHS.find(x=>x.id==='fix');
+if(fx)fx.load=()=>[mk('a','V1',0,10),mk('b','V1',13,8),mk('c','V1',23,6)];
+renderBin();render();
+})();
 </script></body></html>
