@@ -232,7 +232,8 @@ $('#binl').innerHTML=SRC.map(s=>`<div class="bi" draggable="true" data-id="${s.i
 document.querySelectorAll('.bi').forEach(b=>{b.ondragstart=e=>e.dataTransfer.setData('text/plain',b.dataset.id);b.ondblclick=()=>{const s=SRC.find(x=>x.id===b.dataset.id);add(s.id,s.t==='a'?'A1':'V1',t)}});
 function play(){if(timer){clearInterval(timer);timer=null;$('#play').textContent='▶';preview();return}
  const end=Math.max(0,...items.map(i=>i.s+i.d));if(t>=end)t=0;
- $('#play').textContent='⏸';timer=setInterval(()=>{t+=1/FPS;if(t>=end||t>=LEN){t=Math.min(t,end);play();}pos()},1000/FPS)}
+ $('#play').textContent='⏸';let last=performance.now();
+ timer=setInterval(()=>{const n=performance.now();t+=Math.min(.25,(n-last)/1000);last=n;if(t>=end||t>=LEN){t=Math.min(t,end);play();}pos()},1000/FPS)}
 $('#play').onclick=play;$('#home').onclick=()=>{t=0;pos()};
 $('#bv').onclick=()=>setTool('v');$('#bc').onclick=()=>setTool('c');
 $('#bs').onclick=()=>{const it=items.find(i=>i.id===sel)||items.find(i=>t>i.s&&t<i.s+i.d);if(it)cut(it,t)};
@@ -498,7 +499,7 @@ function drawFrame(c,W,H){
   c.translate(W/2+(f.x-960)/1920*W,H/2+(f.y-540)/1080*H);c.rotate(f.rot*Math.PI/180);c.scale(f.sc/100,f.sc/100);c.translate(-W/2,-H/2);
   c.beginPath();c.rect(f.cl/100*W,f.ct/100*H,W*(1-(f.cl+f.cr)/100),H*(1-(f.ct+f.cb)/100));c.clip();
   c.globalAlpha=Math.max(0,Math.min(1,f.op/100*fade(it,f)));c.globalCompositeOperation=BL[f.bm]||'source-over';
-  c.filter='brightness('+f.br+'%) contrast('+f.co+'%) saturate('+f.sa+'%) grayscale('+f.gs+'%) sepia('+f.se+'%)';
+    c.filter=(f.br===100&&f.co===100&&f.sa===100&&f.gs===0&&f.se===0)?'none':'brightness('+f.br+'%) contrast('+f.co+'%) saturate('+f.sa+'%) grayscale('+f.gs+'%) sepia('+f.se+'%)';
   if(s.url&&s.k==='v')fit(c,L.v,L.v.videoWidth,L.v.videoHeight,W,H);
   else if(s.url&&s.k==='i')fit(c,L.i,L.i.naturalWidth,L.i.naturalHeight,W,H);
   else{c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';
@@ -514,29 +515,51 @@ async function exportVideo(){
  const end=endT();
  if(!end){toast('Adicione clipes à timeline antes de exportar.');return}
  if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){toast('Este navegador não suporta exportação. Use Chrome, Edge ou Firefox.');return}
+ if(document.hidden){toast('Deixe esta aba visível para exportar.');return}
  if(timer)play();
  const W=1280,H=720,cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
- AC=AC||new AudioContext();await AC.resume();
- const dest=AC.createMediaStreamDestination(),els=[LY.V1.v,LY.V2.v,LY.V3.v,$('#pa')];
- els.forEach(e=>{if(!e._s){e._s=AC.createMediaElementSource(e);e._s.connect(AC.destination)}e._s.connect(dest)});
- const mt=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+ // áudio só se houver mídia real com som
+ const hasAud=items.some(i=>src(i).url&&(src(i).k==='v'||src(i).k==='a'));
+ let dest=null,els=[];
+ if(hasAud){try{
+  AC=AC||new AudioContext();await AC.resume();dest=AC.createMediaStreamDestination();
+  els=[LY.V1.v,LY.V2.v,LY.V3.v,$('#pa')];
+  els.forEach(e=>{if(!e._s){e._s=AC.createMediaElementSource(e);e._s.connect(AC.destination)}e._s.connect(dest)});
+ }catch(err){dest=null;els=[]}}
+ const mt=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm','video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4'].find(m=>MediaRecorder.isTypeSupported(m));
  if(!mt){toast('Este navegador não suporta os formatos de exportação.');return}
- const rec=new MediaRecorder(new MediaStream([...cv.captureStream(30).getVideoTracks(),...dest.stream.getAudioTracks()]),{mimeType:mt,videoBitsPerSecond:5e6}),ch=[];
- let cancel=false;
- rec.ondataavailable=e=>{if(e.data.size)ch.push(e.data)};
+ const tracks=[...cv.captureStream(30).getVideoTracks()];
+ if(dest)tracks.push(...dest.stream.getAudioTracks());
+ let rec;
+ try{rec=new MediaRecorder(new MediaStream(tracks),{mimeType:mt,videoBitsPerSecond:5e6})}
+ catch(err){toast('Não foi possível iniciar a gravação: '+err.message);return}
+ const ch=[];let cancel=false,failed='';
+ const vis=()=>{if(document.hidden&&exR&&exR.live){toast('Exportação cancelada: a aba precisa ficar visível.');exR.stop()}};
+ document.addEventListener('visibilitychange',vis);
+ rec.ondataavailable=e=>{if(e.data&&e.data.size)ch.push(e.data)};
+ rec.onerror=e=>{failed=(e.error&&e.error.message)||'erro desconhecido';if(rec.state!=='inactive')rec.stop()};
  ex.style.display='flex';$('#exv').innerHTML='';$('#exb').style.width='0%';$('#exc').textContent='Cancelar';
- $('#exm').textContent='Exportando em tempo real: leva cerca de '+Math.ceil(end)+' s. Mantenha esta aba aberta e visível.';
- rec.onstop=()=>{els.forEach(e=>e._s.disconnect(dest));exR.live=false;
+ $('#exm').textContent='Preparando… (cerca de '+Math.ceil(end)+' s de gravação em tempo real). Mantenha esta aba aberta e visível.';
+ rec.onstop=()=>{
+  document.removeEventListener('visibilitychange',vis);
+  els.forEach(e=>{try{e._s.disconnect(dest)}catch(x){}});exR.live=false;
   if(cancel){ex.style.display='none';return}
-  const ext=mt.startsWith('video/mp4')?'mp4':'webm',u=URL.createObjectURL(new Blob(ch,{type:mt.split(';')[0]}));
-  $('#exm').textContent='Pronto! Assista abaixo e baixe o arquivo. Se o download não começar, clique com o botão direito no vídeo e escolha Salvar vídeo como.';
+  const blob=new Blob(ch,{type:mt.split(';')[0]});
+  if(failed||blob.size<2000){$('#exm').textContent='A exportação falhou'+(failed?' ('+failed+')':' (arquivo vazio)')+'. Tente de novo com a aba visível ou use o Chrome/Edge atualizado.';$('#exc').textContent='Fechar';return}
+  const ext=mt.startsWith('video/mp4')?'mp4':'webm',u=URL.createObjectURL(blob);
+  $('#exm').textContent='Pronto! Assista abaixo e baixe o arquivo.';
   $('#exb').style.width='100%';
   $('#exv').innerHTML='<video controls src="'+u+'" style="width:100%;margin:8px 0;background:#000"></video><a class="btnl" href="'+u+'" download="video-editado.'+ext+'">⬇ Baixar vídeo (.'+ext+')</a>';
   $('#exc').textContent='Fechar';F.exp=true;ding();party()};
  exR={live:true,stop:()=>{cancel=true;if(rec.state!=='inactive')rec.stop();if(timer)play()}};
- t=0;pos();rec.start(500);play();
+ // pré-carrega o primeiro quadro antes de gravar
+ t=0;pos();drawFrame(c,W,H);await sleep(700);drawFrame(c,W,H);
+ if(cancel)return;
+ $('#exm').textContent='Exportando em tempo real: leva cerca de '+Math.ceil(end)+' s. Mantenha esta aba aberta e visível.';
+ rec.start(500);play();
  const loop=()=>{if(rec.state==='inactive')return;drawFrame(c,W,H);$('#exb').style.width=Math.min(100,t/end*100)+'%';
-  if(!timer)setTimeout(()=>{if(rec.state!=='inactive')rec.stop()},300);else requestAnimationFrame(loop)};
+  if(!timer)setTimeout(()=>{if(rec.state!=='inactive')rec.stop()},400);else requestAnimationFrame(loop)};
  requestAnimationFrame(loop)}
 $('#bexp').onclick=exportVideo;
 Object.assign(TIPS,{bexp:['Exportar vídeo','Grava a timeline em tempo real e gera um arquivo de vídeo (MP4 ou WebM) para baixar. Funciona melhor no Chrome e no Edge.']});
