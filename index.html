@@ -47,7 +47,7 @@ dl{margin:0}dt{font-weight:600;margin-top:6px}dd{margin:0;color:var(--mu)}
 .tlh{display:flex;gap:14px;align-items:center;padding:5px 10px;border-bottom:1px solid var(--bd);flex-wrap:wrap}
 .sq{font-weight:600}.tlh label{display:flex;gap:6px;align-items:center}
 .tlb{display:flex;flex:1;overflow:hidden}
-.heads{width:48px;flex:none;border-right:1px solid var(--bd)}
+.heads{width:76px;flex:none;border-right:1px solid var(--bd)}
 .heads div{height:46px;display:flex;align-items:center;justify-content:center;font-weight:600;border-bottom:1px solid var(--bd);color:var(--mu)}
 .heads .rh{height:24px}
 .sc{flex:1;overflow-x:auto;overflow-y:hidden}
@@ -84,6 +84,31 @@ dl{margin:0}dt{font-weight:600;margin-top:6px}dd{margin:0;color:var(--mu)}
 .kn{display:none;gap:1px;flex:none}.fr.on .kn{display:flex}
 .kn button{padding:0 3px;background:none;border:0;font-size:10px}.kn .kd.on{background:none;color:#ffd23f}
 .km{position:absolute;bottom:3px;width:8px;height:8px;background:#ffd23f;border:1px solid #0009;transform:translateX(-4px) rotate(45deg);pointer-events:none}
+#bu,#bre{font-size:17px}.clip,#ruler{touch-action:none}
+.heads .th{flex-direction:column;gap:1px;font-size:11px}.th span{display:flex}
+.th button{padding:0 2px;font-size:11px;background:none;border:0;color:var(--tx)}
+#ttxt{width:120px;background:#161616;color:var(--tx);border:1px solid var(--bd);border-radius:3px;padding:3px 6px}
+.ms li.pg:before{content:none}.ms li.pg{display:block;border:0}
+#hp{position:fixed;inset:0;z-index:90;background:#000a;display:none;align-items:center;justify-content:center}
+.hc{background:var(--pn);border:1px solid var(--bd);border-radius:10px;padding:16px;max-width:360px}.hc ul{padding-left:18px}
+button:disabled{opacity:.4;cursor:not-allowed}
+#tour.g{pointer-events:none}#tour.g #tcard{pointer-events:auto}#tour.g #tspot{box-shadow:0 0 0 9999px #0006}
+#tcard.done{border-color:var(--ok)}
+.xp{height:6px;background:var(--pn2);border-radius:3px;margin:6px 0 10px}.xp div{height:6px;width:0;background:var(--ok);border-radius:3px;transition:width .4s}
+#tmsg{color:var(--ok);font-weight:600;min-height:18px;margin-bottom:10px}#tmsg.pop{animation:pop .45s}
+#txp{font-weight:600;color:#ffd23f}
+@keyframes pop{0%{transform:scale(.8)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){#tmsg.pop{animation:none}}
+.pre{display:flex;gap:6px;flex-wrap:wrap;padding:6px 10px;border-bottom:1px solid var(--bd)}
+#med{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.md{width:44px;height:44px;border-radius:8px;background:var(--pn2);display:flex;align-items:center;justify-content:center;font-size:22px;filter:grayscale(1);opacity:.35}
+.md.on{filter:none;opacity:1;border:1px solid #ffd23f}
+.chc{padding:8px 0;border-bottom:1px solid var(--bd)}.chc p{margin:4px 0 8px;color:var(--mu)}
+.cf{position:fixed;top:-20px;z-index:120;font-style:normal;font-size:20px;animation:fall 1.8s ease-in forwards;pointer-events:none}
+@keyframes fall{to{transform:translateY(105vh) rotate(360deg)}}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--pn);border:1px solid var(--ok);color:var(--tx);padding:8px 14px;border-radius:8px;z-index:120;display:none}
+#ex{position:fixed;inset:0;z-index:95;background:#000b;display:none;align-items:center;justify-content:center}
+.btnl{display:inline-block;padding:5px 12px;background:var(--ac);color:#fff;border-radius:3px;text-decoration:none;margin-right:8px}
 #tip{position:fixed;z-index:50;max-width:270px;background:var(--tx);color:var(--bg);border-radius:6px;padding:7px 10px;font-size:12px;line-height:1.4;pointer-events:none;display:none;box-shadow:0 4px 14px #0005}
 #tip b{display:block;font-size:13px;margin-bottom:2px}#tip em{display:block;margin-top:4px;font-style:normal;opacity:.75}
 #tour{position:fixed;inset:0;z-index:100;display:none}
@@ -94,13 +119,14 @@ dl{margin:0}dt{font-weight:600;margin-top:6px}dd{margin:0;color:var(--mu)}
 @media (prefers-reduced-motion:reduce){#tspot{transition:none}}
 @media (max-width:860px){.top{flex-direction:column;height:auto}#bin{flex:none;max-height:300px}.mid{min-height:300px}}
 </style></head><body>
-<header class="bar"><div class="brand"><h1>🎬 Estúdio de Edição</h1><button id="btour" class="on">❓ Tour guiado</button></div><span class="mu">Simulador de edição de vídeo</span></header>
+<header class="bar"><div class="brand"><h1>🎬 Estúdio de Edição</h1><button id="btour" class="on">❓ Tour guiado</button><button id="bhelp">⌨ Atalhos</button><button id="bsnd">🔊</button><button id="bexp" class="on">⬇ Exportar vídeo</button></div><span class="mu">Simulador de edição de vídeo</span></header>
 <div class="top">
 <aside class="pn" id="bin">
-<div class="ph"><button class="tab on" data-p="pj">Projeto</button><button class="tab" data-p="fx">Controles de efeitos</button><button class="tab" data-p="ms">Missões</button><button class="tab" data-p="co">Conceitos</button></div>
+<div class="ph"><button class="tab on" data-p="pj">Projeto</button><button class="tab" data-p="fx">Controles de efeitos</button><button class="tab" data-p="ch">Desafios</button><button class="tab" data-p="ms">Missões</button><button class="tab" data-p="co">Conceitos</button></div>
 <div class="pane" id="p-pj"><div class="lh"><span>Nome</span><span>Duração</span></div><div id="binl"></div></div>
 <div class="pane" id="p-fx" hidden></div>
-<div class="pane" id="p-ms" hidden><ul class="ms" id="ms"></ul></div>
+<div class="pane" id="p-ch" hidden></div>
+<div class="pane" id="p-ms" hidden><div id="med"></div><ul class="ms" id="ms"></ul></div>
 <div class="pane" id="p-co" hidden><div id="info"></div><dl>
 <dt>Timeline</dt><dd>Linha do tempo onde os clipes são organizados.</dd>
 <dt>Trilha (V1, V2, V3, A1)</dt><dd>Camadas. Na imagem, a trilha de cima cobre a de baixo.</dd>
@@ -110,7 +136,7 @@ dl{margin:0}dt{font-weight:600;margin-top:6px}dd{margin:0;color:var(--mu)}
 <dt>Quadro-chave (keyframe)</dt><dd>Marca o valor de uma propriedade em um instante. Entre dois quadros-chave, o programa calcula a transição e cria a animação.</dd>
 <dt>Controles de efeitos</dt><dd>Ajustes do clipe selecionado: posição, escala, rotação, corte e opacidade.</dd>
 <dt>Snap (ímã)</dt><dd>Faz o clipe "grudar" no playhead e nas bordas de outros clipes.</dd></dl></div>
-<div class="pf"><button id="imp">＋ Importar arquivos</button><input type="file" id="fi" multiple accept="video/*,audio/*,image/*" hidden><span class="hint">Ou solte arquivos aqui ou na timeline. Ficam só neste navegador.</span><span class="hint" id="msg" style="color:#ff6b6b"></span></div>
+<div class="pf"><button id="imp">＋ Importar arquivos</button><input id="ttxt" placeholder="Texto do título" maxlength="40"><button id="ttl">＋ Título</button><input type="file" id="fi" multiple accept="video/*,audio/*,image/*" hidden><span class="hint">Ou solte arquivos aqui ou na timeline. Ficam só neste navegador.</span><span class="hint" id="msg" style="color:#ff6b6b"></span></div>
 </aside>
 <section class="pn mid"><div class="ph"><span class="pt">Programa: SEQUÊNCIA 01</span></div>
 <div id="mon"><div id="stage"></div><audio id="pa"></audio><div id="mtxt"></div><div id="aud"></div></div>
@@ -118,6 +144,7 @@ dl{margin:0}dt{font-weight:600;margin-top:6px}dd{margin:0;color:var(--mu)}
 </div>
 <section class="tl" id="tl">
 <div class="tbar">
+<button id="bu" title="Desfazer (Ctrl+Z)">↶</button><button id="bre" title="Refazer (Ctrl+Y)">↷</button>
 <button id="bv" class="on" title="Seleção (V)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3l12 9-5.5 1 3 6.5-2.5 1.2-3-6.5L6 18z" fill="currentColor"/></svg></button>
 <button id="bc" title="Lâmina (C)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19L17 4l3 2.5L9 21z"/><path d="M13 11l2 1.6"/></svg></button>
 <button id="bs" title="Dividir no cursor (S)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M5 8l4 4-4 4M19 8l-4 4 4 4"/></svg></button>
@@ -127,7 +154,7 @@ dl{margin:0}dt{font-weight:600;margin-top:6px}dd{margin:0;color:var(--mu)}
 <div class="tmain"><div class="tlh"><span class="sq">SEQUÊNCIA 01</span><label>Zoom <input type="range" id="zoom" min="15" max="120" value="40"></label>
 <label><input type="checkbox" id="snap" checked> Snap (ímã)</label>
 <span class="mu">V seleção · C lâmina · S dividir · Espaço play · Delete excluir</span></div>
-<div class="tlb"><div class="heads"><div class="rh"></div><div>V3</div><div>V2</div><div>V1</div><div>A1</div></div>
+<div class="tlb"><div class="heads"><div class="rh"></div><div class="th"><b>V3</b><span><button data-tr="V3" data-a="l">🔒</button><button data-tr="V3" data-a="h">👁</button></span></div><div class="th"><b>V2</b><span><button data-tr="V2" data-a="l">🔒</button><button data-tr="V2" data-a="h">👁</button></span></div><div class="th"><b>V1</b><span><button data-tr="V1" data-a="l">🔒</button><button data-tr="V1" data-a="h">👁</button></span></div><div class="th"><b>A1</b><span><button data-tr="A1" data-a="l">🔒</button><button data-tr="A1" data-a="m">M</button></span></div></div>
 <div class="sc" id="sc"><div id="inner"><div id="ruler"></div>
 <div class="lane" id="laneV3" data-tr="V3"></div><div class="lane" id="laneV2" data-tr="V2"></div><div class="lane" id="laneV1" data-tr="V1"></div><div class="lane" id="laneA1" data-tr="A1"></div>
 <div id="ph"></div></div></div></div></div></section>
@@ -136,7 +163,7 @@ const $=s=>document.querySelector(s),FPS=30;let LEN=60;
 const SRC=[{id:'a',n:'Praia.mp4',c:'#d9742b',d:10,t:'v',k:'v'},{id:'b',n:'Cidade.mp4',c:'#2b7a96',d:8,t:'v',k:'v'},{id:'c',n:'Floresta.mp4',c:'#2f9e5f',d:12,t:'v',k:'v'},{id:'d',n:'Trilha.mp3',c:'#3f8a3a',d:20,t:'a',k:'a'}];
 const TR=[{id:'V3',t:'v'},{id:'V2',t:'v'},{id:'V1',t:'v'},{id:'A1',t:'a'}];
 const INFO={v:'<b>Seleção (V)</b>: clique para selecionar um clipe. Arraste para mover (até para outra trilha) e puxe as bordas para aparar o início ou o fim (trim).',c:'<b>Lâmina (C)</b>: clique sobre um clipe para dividi-lo em dois no ponto clicado. O corte não apaga nada, só separa.'};
-const MS=[['Importe um arquivo seu (vídeo, foto ou áudio)',()=>F.imp],['Adicione um clipe à timeline',()=>items.length>0],['Corte um clipe com a Lâmina (C)',()=>F.cut],['Apare a borda de um clipe arrastando',()=>F.trim],['Ajuste escala, posição ou opacidade em Controles de efeitos',()=>F.fx],['Anime um efeito: ative o cronômetro ⏱ e crie 2 quadros-chave',()=>items.some(i=>i.kf&&Object.values(i.kf).some(a=>a.length>1))],['Coloque um clipe na V2, sobre outro da V1',()=>items.some(i=>i.tr==='V2')&&items.some(i=>i.tr==='V1')],['Adicione áudio na trilha A1',()=>items.some(i=>i.tr==='A1')],['Exclua um clipe (Delete)',()=>F.del],['Use o ripple: Shift+Delete',()=>F.rip]];
+const MS=[['Importe um arquivo seu (vídeo, foto ou áudio)',()=>F.imp],['Adicione um clipe à timeline',()=>items.length>0],['Corte um clipe com a Lâmina (C)',()=>F.cut],['Apare a borda de um clipe arrastando',()=>F.trim],['Ajuste escala, posição ou opacidade em Controles de efeitos',()=>F.fx],['Anime um efeito: ative o cronômetro ⏱ e crie 2 quadros-chave',()=>items.some(i=>i.kf&&Object.values(i.kf).some(a=>a.length>1))],['Coloque um clipe na V2, sobre outro da V1',()=>items.some(i=>i.tr==='V2')&&items.some(i=>i.tr==='V1')],['Adicione áudio na trilha A1',()=>items.some(i=>i.tr==='A1')],['Exclua um clipe (Delete)',()=>F.del],['Use o ripple: Shift+Delete',()=>F.rip],['Desfaça uma ação com Ctrl+Z',()=>F.undo],['Crie um fade de entrada ou saída em um clipe',()=>items.some(i=>i.fx&&(i.fx.fi>0||i.fx.fo>0))],['Adicione um título (texto) à timeline',()=>items.some(i=>src(i).k==='t')],['Mude a velocidade de um clipe',()=>items.some(i=>i.fx&&i.fx.sp!==undefined&&i.fx.sp!==100)],['Ajuste o volume de um clipe de áudio',()=>items.some(i=>(i.fx&&i.fx.vol!==undefined&&i.fx.vol!==100)||(i.kf&&i.kf.vol))],['Trave, oculte ou silencie uma trilha',()=>F.trk]];
 let items=[],sel=null,tool='v',t=0,pps=40,snapOn=true,timer=null,uid=1,F={};
 const src=i=>SRC.find(s=>s.id===i.src);
 const fmt=x=>{const f=Math.floor(x*FPS),p=n=>String(n).padStart(2,'0');return p(Math.floor(f/FPS/60))+':'+p(Math.floor(f/FPS)%60)+':'+p(f%FPS)};
@@ -156,34 +183,35 @@ function preview(){
  const w=Math.max(0,Math.min(m.clientWidth,m.clientHeight*16/9));st.style.width=w+'px';st.style.height=w*9/16+'px';
  let top=null;const a=at('A1');
  ['V1','V2','V3'].forEach(id=>{
-  const L=layer(id),it=at(id),s=it&&src(it);
+  const L=layer(id),it=TS[id].h?null:at(id),s=it&&src(it);
   L.d.style.display=it?'block':'none';
   if(!it){L.v.pause();return}
   top=it;const re=s.url;
   L.v.style.display=re&&s.k==='v'?'block':'none';L.i.style.display=re&&s.k==='i'?'block':'none';L.b.style.display=re?'none':'flex';
   if(re&&s.k==='v')sync(L.v,it,run);else L.v.pause();
   if(re&&s.k==='i'&&L.i.dataset.u!==s.url){L.i.src=s.url;L.i.dataset.u=s.url}
-  if(!re){L.b.style.background=`linear-gradient(135deg,${s.c},#000a)`;L.b.textContent=s.n}
+  if(!re){const tt=s.k==='t';L.b.style.background=tt?'none':`linear-gradient(135deg,${s.c},#000a)`;L.b.style.fontSize=tt?'clamp(20px,5vw,48px)':'';L.b.textContent=s.n}
   const f=FV(it,t),W=st.clientWidth,H=st.clientHeight,ds=L.d.style;
   ds.transform=`translate(${(f.x-960)/1920*W}px,${(f.y-540)/1080*H}px) rotate(${f.rot}deg) scale(${f.sc/100})`;
-  ds.opacity=f.op/100;ds.mixBlendMode=f.bm;ds.clipPath=`inset(${f.ct}% ${f.cr}% ${f.cb}% ${f.cl}%)`});
- const pa=$('#pa');if(a&&src(a).url)sync(pa,a,run);else pa.pause();
+  ds.opacity=f.op/100*fade(it,f);ds.filter=`brightness(${f.br}%) contrast(${f.co}%) saturate(${f.sa}%) grayscale(${f.gs}%) sepia(${f.se}%)`;ds.mixBlendMode=f.bm;ds.clipPath=`inset(${f.ct}% ${f.cr}% ${f.cb}% ${f.cl}%)`});
+ const pa=$('#pa');if(a&&src(a).url&&!TS.A1.m){sync(pa,a,run);const fa=FV(a,t);pa.volume=Math.max(0,Math.min(1,fa.vol/100*fade(a,fa)))}else pa.pause();
  const mt=$('#mtxt');mt.className=top?'cap':'';
  mt.innerHTML=top?`${src(top).n}<small>Trilha ${top.tr}${top.tr!=='V1'?' (cobre as trilhas abaixo)':''}${src(top).k==='i'?'':' · tempo do arquivo '+fmt(t-top.s+top.i)}</small>`:'<small>Sem clipe sob o playhead: tela preta</small>';
  $('#aud').innerHTML=a?'♪ '+src(a).n+' '+[0,1,2,3,4].map(k=>`<i style="height:${timer?4+Math.abs(Math.sin(t*9+k*2))*14:4}px"></i>`).join(''):'';
 }
-function missions(){$('#ms').innerHTML=MS.map(m=>`<li class="${m[1]()?'ok':''}">${m[0]}</li>`).join('')}
+function missions(){const n=MS.filter(m=>m[1]()).length;$('#ms').innerHTML=`<li class="pg"><b>Progresso: ${n} de ${MS.length}</b><div style="height:6px;background:var(--pn2);border-radius:3px;margin-top:4px"><div style="height:6px;width:${n/MS.length*100}%;background:var(--ok);border-radius:3px"></div></div></li>`+MS.map(m=>`<li class="${m[1]()?'ok':''}">${m[0]}</li>`).join('')}
 function setTool(x){tool=x;$('#bv').classList.toggle('on',x==='v');$('#bc').classList.toggle('on',x==='c');$('#tl').classList.toggle('tc',x==='c');$('#info').innerHTML=INFO[x]}
-function add(sid,trid,s){const sc=SRC.find(x=>x.id===sid),tr=TR.find(x=>x.id===trid);if(!tr||tr.t!==sc.t)return;items.push({id:uid++,src:sid,tr:trid,s:Math.max(0,s),i:0,d:sc.dd||sc.d});render()}
-function cut(it,x){if(snapOn&&Math.abs(x-t)<8/pps)x=t;if(x>it.s+.1&&x<it.s+it.d-.1){const n={...it,fx:it.fx&&{...it.fx},kf:it.kf&&JSON.parse(JSON.stringify(it.kf)),id:uid++,s:x,i:it.i+x-it.s,d:it.s+it.d-x};it.d=x-it.s;items.push(n);sel=n.id;F.cut=true;render()}}
-function del(rip){const it=items.find(i=>i.id===sel);if(!it)return;items=items.filter(i=>i!==it);if(rip){items.forEach(i=>{if(i.tr===it.tr&&i.s>=it.s+it.d-.001)i.s-=it.d});F.rip=true}F.del=true;sel=null;render()}
+function add(sid,trid,s){const sc=SRC.find(x=>x.id===sid),tr=TR.find(x=>x.id===trid);if(!tr||tr.t!==sc.t||TS[trid].l)return;push();items.push({id:uid++,src:sid,tr:trid,s:Math.max(0,s),i:0,d:sc.dd||sc.d});render()}
+function cut(it,x){if(snapOn&&Math.abs(x-t)<8/pps)x=t;if(x>it.s+.1&&x<it.s+it.d-.1){push();const n={...it,fx:it.fx&&{...it.fx},kf:it.kf&&JSON.parse(JSON.stringify(it.kf)),id:uid++,s:x,i:it.i+x-it.s,d:it.s+it.d-x};it.d=x-it.s;items.push(n);sel=n.id;F.cut=true;render()}}
+function del(rip){const it=items.find(i=>i.id===sel);if(!it)return;push();items=items.filter(i=>i!==it);if(rip){items.forEach(i=>{if(i.tr===it.tr&&i.s>=it.s+it.d-.001)i.s-=it.d});F.rip=true}F.del=true;sel=null;render()}
 const tx=e=>(e.clientX-$('#inner').getBoundingClientRect().left)/pps;
-$('#inner').addEventListener('mousedown',e=>{
- if(e.target.closest('#ruler')){const mv=ev=>{t=Math.max(0,Math.min(LEN,tx(ev)));pos()};mv(e);const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};addEventListener('mousemove',mv);addEventListener('mouseup',up);return}
+$('#inner').addEventListener('pointerdown',e=>{
+ if(e.target.closest('#ruler')){const mv=ev=>{t=Math.max(0,Math.min(LEN,tx(ev)));pos()};mv(e);const up=()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up)};addEventListener('pointermove',mv);addEventListener('pointerup',up);return}
  const c=e.target.closest('.clip');if(!c){sel=null;render();return}
  const it=items.find(i=>i.id==c.dataset.id);
+ if(TS[it.tr].l)return;
  if(tool==='c'){cut(it,tx(e));return}
- sel=it.id;e.preventDefault();
+ sel=it.id;e.preventDefault();push();
  const m=e.target.classList.contains('hl')?'l':e.target.classList.contains('hr')?'r':'m',x0=e.clientX,o={...it},sd=src(it);
  const pts=[0,t,...items.filter(x=>x!==it).flatMap(x=>[x.s,x.s+x.d])];
  const sn=v=>{if(!snapOn)return v;let b=v,bd=8/pps;pts.forEach(p=>{if(Math.abs(p-v)<bd){bd=Math.abs(p-v);b=p}});return b};
@@ -193,8 +221,8 @@ $('#inner').addEventListener('mousedown',e=>{
   else if(m==='l'){let ns=sn(o.s+dt);ns=Math.min(Math.max(ns,o.s-o.i),o.s+o.d-.3);it.d=o.d-(ns-o.s);it.i=o.i+(ns-o.s);it.s=ns;if(Math.abs(ns-o.s)>.05)F.trim=true}
   else{let ne=sn(o.s+o.d+dt);ne=Math.max(o.s+.3,Math.min(ne,o.s+sd.d-o.i));it.d=ne-o.s;if(Math.abs(it.d-o.d)>.05)F.trim=true}
   render()};
- const up=()=>{removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};
- addEventListener('mousemove',mv);addEventListener('mouseup',up);render();
+ const up=()=>{removeEventListener('pointermove',mv);removeEventListener('pointerup',up)};
+ addEventListener('pointermove',mv);addEventListener('pointerup',up);render();
 });
 const inner=$('#inner');
 inner.addEventListener('dragover',e=>{const l=e.target.closest('.lane');if(l){e.preventDefault();l.classList.add('over')}});
@@ -211,19 +239,20 @@ $('#bs').onclick=()=>{const it=items.find(i=>i.id===sel)||items.find(i=>t>i.s&&t
 $('#bd').onclick=()=>del(false);$('#br').onclick=()=>del(true);
 $('#zoom').oninput=e=>{pps=+e.target.value;render()};$('#snap').onchange=e=>snapOn=e.target.checked;
 addEventListener('keydown',e=>{if(e.target.matches('input'))return;const k=e.key.toLowerCase();
+ if(e.ctrlKey||e.metaKey){if(k==='z'){e.preventDefault();e.shiftKey?redo():undo()}else if(k==='y'){e.preventDefault();redo()}return}
  if(k==='v')setTool('v');else if(k==='c')setTool('c');else if(k==='s')$('#bs').click();
  else if(k===' '){e.preventDefault();play()}else if(k==='delete'||k==='backspace'){e.preventDefault();del(e.shiftKey)}});
-function sync(el,it,run){const s=src(it),w=t-it.s+it.i;
+function sync(el,it,run){const s=src(it),sp=(FX(it).sp||100)/100,w=(t-it.s)*sp+it.i;el.playbackRate=Math.max(.0625,Math.min(16,sp));
  if(el.dataset.u!==s.url){el.src=s.url;el.dataset.u=s.url}
  if(Math.abs(el.currentTime-w)>(run?.3:.03)){try{el.currentTime=w}catch(e){}}
  if(run&&el.paused)el.play().catch(()=>{});if(!run&&!el.paused)el.pause()}
-const ICON={v:'🎞',i:'🖼',a:'♪'};let un=0;
-function renderBin(){$('#binl').innerHTML=SRC.map(s=>`<div class="bi" draggable="true" data-id="${s.id}"><b style="background:${s.c}"></b><span class="nm">${ICON[s.k]} ${s.n}</span><span class="du">${s.k==='i'?'foto':fmt(s.d)}</span></div>`).join('')}
+const ICON={v:'🎞',i:'🖼',a:'♪',t:'T'};let un=0;
+function renderBin(){$('#binl').innerHTML=SRC.map(s=>`<div class="bi" draggable="true" data-id="${s.id}"><b style="background:${s.c}"></b><span class="nm">${ICON[s.k]} ${s.n}</span><span class="du">${s.k==='i'?'foto':s.k==='t'?'título':fmt(s.d)}</span></div>`).join('')}
 function importFiles(fl,trid,start){
  [...fl].forEach(f=>{
   const k=f.type.startsWith('video')?'v':f.type.startsWith('audio')?'a':f.type.startsWith('image')?'i':null;
   if(!k){$('#msg').textContent='Formato não suportado: '+f.name;return}
-  const url=URL.createObjectURL(f),id='u'+(++un);
+  const url=URL.createObjectURL(f),id='u'+Date.now().toString(36)+(++un);
   const done=d=>{SRC.push({id,n:f.name,c:{v:'#2b7a96',a:'#3f8a3a',i:'#a43a8c'}[k],d,dd:k==='i'?5:d,t:k==='a'?'a':'v',k,url});F.imp=true;$('#msg').textContent='';renderBin();if(trid)add(id,trid,start);else render()};
   if(k==='i')return done(600);
   const el=document.createElement(k==='v'?'video':'audio');el.preload='metadata';
@@ -250,6 +279,9 @@ const TIPS={
  snap:['Snap (ímã)','Faz os clipes e cortes grudarem no playhead e nas bordas de outros clipes.']};
 const tip=document.createElement('div');tip.id='tip';document.body.appendChild(tip);
 function tipFor(el){
+ if(el.closest('.md'))return[el.closest('.md').dataset.l,el.closest('.md').dataset.h];
+ if(el.closest('[data-pr]'))return['Predefinição','Aplica um efeito pronto ao clipe selecionado. Depois você pode ajustar os valores.'];
+ if(el.closest('.th button')){const a=el.closest('button').dataset.a;return a==='l'?['Travar trilha','Impede editar os clipes desta trilha.']:a==='h'?['Ocultar trilha','Esconde a imagem desta trilha no monitor.']:['Silenciar trilha','Desliga o áudio desta trilha.']}
  if(el.closest('.sw'))return['Cronômetro (quadros-chave)','Liga a animação desta propriedade. Ao ativar, nasce um quadro-chave no playhead. Depois, mude o valor em outro momento para criar a animação. Desativar apaga os quadros-chave.'];
  if(el.closest('.kp'))return['Quadro-chave anterior','Move o playhead para o quadro-chave anterior.'];
  if(el.closest('.kx'))return['Próximo quadro-chave','Move o playhead para o próximo quadro-chave.'];
@@ -267,7 +299,7 @@ function tipFor(el){
  return TIPS[id]||null}
 let tipOff=false,tipKey='';
 document.querySelectorAll('[title]').forEach(b=>{b.setAttribute('aria-label',b.title);b.removeAttribute('title')});
-document.addEventListener('mousemove',e=>{
+document.addEventListener('pointermove',e=>{
  const d=tipOff?null:tipFor(e.target);
  if(!d){tip.style.display='none';tipKey='';return}
  if(tipKey!==d[0]){tipKey=d[0];tip.innerHTML=`<b>${d[0]}</b>${d[1]}${d[2]?`<em>Atalho: ${d[2]}</em>`:''}`}
@@ -276,86 +308,106 @@ document.addEventListener('mousemove',e=>{
  tip.style.left=Math.max(6,Math.min(e.clientX+14,innerWidth-w-8))+'px';
  tip.style.top=(e.clientY+20+h>innerHeight?e.clientY-h-12:e.clientY+20)+'px'});
 document.addEventListener('mouseleave',()=>tip.style.display='none');
-document.addEventListener('mousedown',()=>{tipOff=true;tip.style.display='none'});
-document.addEventListener('mouseup',()=>tipOff=false);
+document.addEventListener('pointerdown',()=>{tipOff=true;tip.style.display='none'});
+document.addEventListener('pointerup',()=>tipOff=false);
 TIPS.btour=['Tour guiado','Uma visita passo a passo por todas as áreas do simulador.'];
+const MV=()=>Object.fromEntries(items.map(i=>[i.id,[i.s,i.d,i.i,i.tr]]));
+const FXS=k=>Object.fromEntries(items.map(i=>[i.id,(i.fx&&i.fx[k]!==undefined)?i.fx[k]:FXD[k]]));
+const FXC=(k,m)=>items.some(i=>((i.fx&&i.fx[k]!==undefined)?i.fx[k]:FXD[k])!==m[i.id]);
+const KFC=()=>items.reduce((n,i)=>n+(i.kf?Object.values(i.kf).reduce((a,v)=>a+v.length,0):0),0);
+const need=()=>{if(!items.some(i=>src(i).t==='v'))add('a','V1',0)};
+const tab=n=>document.querySelector('.tab[data-p="'+n+'"]').click();
 const STEPS=[
- {t:'Bem-vindo ao Estúdio de Edição',p:'Este simulador reproduz a lógica de um editor de vídeo. Vamos conhecer cada área em poucos passos. Use as setas do teclado ou os botões para navegar.'},
- {s:'#bin',t:'Mídia do projeto',p:'Aqui ficam os arquivos disponíveis para a edição. Arraste um item para a timeline ou dê duplo clique para adicioná-lo no playhead.'},
- {s:'#imp',t:'Importar seus arquivos',p:'Traga vídeos, fotos e áudios do seu computador. Eles ficam só no seu navegador e nada é enviado para a internet.'},
- {s:'.tab[data-p="fx"]',t:'Controles de efeitos',p:'Selecione um clipe na timeline e abra esta aba para mudar posição, escala, rotação, corte e opacidade. O resultado aparece na hora no monitor.'},
- {s:'#p-fx',pre:prepFx,t:'Propriedades do clipe',p:'Com um clipe selecionado, esta aba mostra Movimento e Opacidade. Mude o valor no campo azul ou no controle deslizante e veja o resultado no monitor. Se a timeline estiver vazia, o tour coloca um clipe de exemplo para a demonstração.'},
- {s:'#p-fx .sw',pre:prepFx,t:'Cronômetro: ligue os quadros-chave',p:'Quadros-chave servem para animar. O cronômetro ⏱ liga a animação de uma propriedade e cria o primeiro quadro-chave (◆) no ponto do playhead, guardando o valor atual.'},
- {s:'#ruler',t:'Crie o movimento',p:'Mova o playhead para outro momento e mude o valor. Um novo quadro-chave é criado e o programa calcula sozinho a transição entre eles. Exemplo: Escala em 100% no início e 150% dois segundos depois faz o clipe crescer suavemente. Opacidade de 0% a 100% cria um fade in.'},
- {s:'#sc',t:'Quadros-chave na timeline',p:'Os quadros-chave do clipe selecionado aparecem como losangos amarelos na base do clipe. Eles ficam presos ao conteúdo do clipe, então acompanham o clipe quando você o move ou apara.'},
- {s:'#p-fx .fr',pre:prepFx,t:'Navegar e editar quadros-chave',p:'Com o cronômetro ligado, aparecem ◀ e ▶ para saltar entre quadros-chave e o ◆ para criar ou remover um no playhead. Desligar o cronômetro apaga os quadros-chave daquela propriedade, e o ↺ redefine tudo.'},
- {s:'#mon',t:'Monitor',p:'Mostra o que está sob o playhead naquele instante. Se houver clipes em V1 e V2, a trilha de cima aparece na frente.'},
- {s:'.tcrow',t:'Reprodução e timecode',p:'Reproduza a edição com o botão ou com a barra de espaço. O timecode mostra a posição atual em minutos:segundos:quadros.'},
- {s:'.heads',t:'Trilhas',p:'V1 e V2 recebem vídeo e fotos, e A1 recebe áudio. Trilhas são camadas: a de cima cobre a de baixo na imagem.'},
- {s:'#ruler',t:'Régua e playhead',p:'Clique ou arraste na régua para mover o playhead, a linha vermelha que marca o momento mostrado no monitor.'},
- {s:'#bv',t:'Ferramenta Seleção (V)',p:'Clique num clipe para selecioná-lo e arraste para movê-lo, inclusive para outra trilha. Puxe as bordas para aparar o início ou o fim (trim).'},
- {s:'#bc',t:'Ferramenta Lâmina (C)',p:'Com ela ativa, clique sobre um clipe para dividi-lo em dois. O corte não apaga nada, só separa o clipe em partes.'},
- {s:'#bs',t:'Dividir no cursor (S)',p:'Corta o clipe exatamente no playhead, sem precisar clicar nele. É a forma mais precisa de cortar.'},
- {s:'#br',t:'Excluir e ripple',p:'Excluir remove o clipe e deixa um espaço vazio. O ripple (Shift + Delete) também fecha o buraco, puxando os clipes seguintes.'},
- {s:'.tlh',t:'Zoom e snap',p:'O zoom aproxima a timeline para cortes finos. O snap faz os clipes grudarem no playhead e nas bordas de outros clipes.'},
- {t:'Tudo pronto!',p:'Importe um arquivo seu e monte uma pequena sequência com cortes, trims e camadas. Você pode refazer este tour a qualquer momento.'}];
-let ts=-1;
+ {t:'Bem-vindo, editor! 🎬',p:'Este tour é um jogo: cada fase pede uma ação no simulador. Faça o que se pede para liberar a próxima fase e ganhar XP.',b:'Começar'},
+ {s:'#binl',t:'Traga um clipe',p:'Arraste um item da lista Projeto até a trilha V1 (ou dê duplo clique nele).',h:'Dica: o duplo clique adiciona o clipe no ponto do playhead.',go:()=>{tab('pj');return{n:items.length}},ok:b=>items.length>b.n},
+ {s:'#play',t:'Reproduza',p:'Clique em ▶ para reproduzir a edição e acompanhe o monitor.',go:()=>{need();return{t}},ok:b=>timer||t!==b.t},
+ {s:'#ruler',t:'Mova o playhead',p:'Clique na régua de tempo para levar a linha azul (playhead) ao meio de um clipe.',go:()=>{need();t=0;pos()},ok:()=>items.some(i=>t>i.s+.5&&t<i.s+i.d-.5)},
+ {s:'#bc',t:'Corte com a Lâmina',p:'Escolha a Lâmina (ou aperte C) e clique sobre um clipe para dividi-lo em dois.',go:()=>{need();return{n:items.length}},ok:b=>items.length>b.n},
+ {s:'#bv',t:'Apare um clipe (trim)',p:'Volte para a Seleção (V). Arraste a ponta de um clipe para encurtá-lo ou esticá-lo.',h:'As pontas ficam claras quando você passa o mouse sobre o clipe.',go:()=>{need();return{m:MV()}},ok:b=>items.some(i=>{const o=b.m[i.id];return o&&o[3]===i.tr&&(Math.abs(o[1]-i.d)>.05||Math.abs(o[2]-i.i)>.05)})},
+ {s:'#sc',t:'Use outra camada',p:'Arraste um clipe para a trilha V2, a camada de cima.',go:()=>{need();return{v:items.filter(i=>i.tr==='V2').length}},ok:b=>items.filter(i=>i.tr==='V2').length>b.v},
+ {s:'#p-fx',t:'Opacidade',p:'Selecione o clipe da V2, abra Controles de efeitos e reduza a Opacidade. O clipe de baixo aparece por trás.',go:()=>{need();tab('fx');return{m:FXS('op')}},ok:b=>FXC('op',b.m)},
+ {s:'#p-fx',t:'Escala',p:'Com um clipe selecionado, mude a Escala (por exemplo, para 150%) e veja a imagem crescer no monitor.',go:()=>{need();tab('fx');return{m:FXS('sc')}},ok:b=>FXC('sc',b.m)},
+ {s:'#p-fx',x:40,t:'Quadros-chave',p:'Anime a Escala: ligue o cronômetro ⏱ ao lado dela, mova o playhead para outro ponto do clipe e mude o valor. Você precisa de 2 quadros-chave (◆).',h:'Os losangos amarelos aparecem na base do clipe. Reproduza para ver a animação.',go:()=>{need();tab('fx');return{k:KFC()}},ok:b=>KFC()>=b.k+2},
+ {s:'#p-fx',t:'Fade de entrada',p:'Na seção Transições, dê pelo menos 1 segundo de Fade de entrada a um clipe.',go:()=>{need();tab('fx');return{m:FXS('fi')}},ok:b=>items.some(i=>i.fx&&i.fx.fi>=1&&(b.m[i.id]||0)<1)},
+ {s:'#ttl',t:'Crie um título',p:'Escreva um texto no campo e clique em ＋ Título.',go:()=>{tab('pj');return{n:items.filter(i=>src(i).k==='t').length}},ok:b=>items.filter(i=>src(i).k==='t').length>b.n},
+ {s:'.heads',t:'Controle as trilhas',p:'Clique em 👁 numa trilha para ocultá-la e veja o monitor mudar. Depois clique de novo para mostrá-la.',go:()=>({j:JSON.stringify(TS)}),ok:b=>JSON.stringify(TS)!==b.j},
+ {s:'#bu',t:'Desfaça uma ação',p:'Errou? Pressione Ctrl+Z ou clique em ↶ para desfazer a última ação.',go:()=>({u:UNC}),ok:b=>UNC>b.u},
+ {s:'#bd',t:'Exclua um clipe',p:'Selecione um clipe e pressione Delete (ou clique em 🗑) para excluí-lo.',go:()=>{need();return{n:items.length}},ok:b=>items.length<b.n},
+ {s:'#bexp',t:'Exporte seu vídeo',p:'Quando terminar, clique em Exportar vídeo para gerar o arquivo do seu trabalho. A gravação é feita em tempo real a partir da timeline.',b:'Continuar'},
+ {s:'.tab[data-p="ch"]',t:'Próximos passos',p:'Depois do tour, abra Desafios para praticar com projetos prontos e ganhar estrelas. Na aba Missões você acompanha suas conquistas.',b:'Continuar'},
+ {t:'🏆 Parabéns, editor!',p:()=>'Você completou todas as fases e conquistou '+xp+' XP (Nível '+(1+Math.floor(xp/100))+'). Agora pratique com seus próprios arquivos e as missões.',b:'Concluir'}];
+let ts=-1,xp=0,base=null,done=false,poll=null;
 const tr=document.createElement('div');tr.id='tour';
-tr.innerHTML='<div id="tspot"></div><div id="tcard" role="dialog" aria-live="polite"><b id="tt"></b><p id="tp"></p><div class="tn"><span id="tcn"></span><span><button id="tskip">Pular</button> <button id="tprev">Voltar</button> <button id="tnext" class="on">Próximo</button></span></div></div>';
+tr.innerHTML='<div id="tspot"></div><div id="tcard" role="dialog" aria-live="polite"><div class="tn"><small id="tcn"></small><span id="txp"></span></div><div class="xp"><div id="tbar2"></div></div><b id="tt"></b><p id="tp"></p><p class="hint" id="th"></p><div id="tmsg"></div><div class="tn"><button id="tskip">Sair do tour</button><button id="tnext" class="on">Próximo</button></div></div>';
 document.body.appendChild(tr);
-function step(n){
- ts=n;const s=STEPS[n];if(s.pre)s.pre();const el=s.s&&$(s.s),sp=$('#tspot'),cd=$('#tcard');
- $('#tt').textContent=s.t;$('#tp').textContent=s.p;$('#tcn').textContent=(n+1)+' de '+STEPS.length;
- $('#tprev').style.visibility=n?'visible':'hidden';$('#tnext').textContent=n===STEPS.length-1?'Concluir':'Próximo';
- let r;
- if(el){el.scrollIntoView({block:'nearest',inline:'nearest'});r=el.getBoundingClientRect();
-  Object.assign(sp.style,{left:r.left-6+'px',top:r.top-6+'px',width:r.width+12+'px',height:r.height+12+'px'})}
+function place(sc){
+ const s=STEPS[ts],cd=$('#tcard'),sp=$('#tspot');let el=s.s&&$(s.s),r;
+ if(el&&sc)el.scrollIntoView({block:'nearest',inline:'nearest'});
+ if(el){r=el.getBoundingClientRect();if(!r.width)el=null}
+ if(el)Object.assign(sp.style,{left:r.left-6+'px',top:r.top-6+'px',width:r.width+12+'px',height:r.height+12+'px',outline:'2px solid var(--ac)'});
  else Object.assign(sp.style,{left:innerWidth/2+'px',top:innerHeight/2+'px',width:'0px',height:'0px',outline:'none'});
- if(el)sp.style.outline='2px solid var(--ac)';
  const w=cd.offsetWidth,h=cd.offsetHeight;let x,y;
  if(!el){x=(innerWidth-w)/2;y=(innerHeight-h)/2}
  else{x=Math.max(8,Math.min(r.left,innerWidth-w-8));
   if(r.bottom+16+h<innerHeight)y=r.bottom+16;else if(r.top-16-h>0)y=r.top-16-h;else y=Math.max(8,innerHeight-h-8)}
- cd.style.left=x+'px';cd.style.top=y+'px';$('#tnext').focus();
-}
-function tour(on){tr.style.display=on?'block':'none';if(on){tip.style.display='none';step(0)}else ts=-1}
+ cd.style.left=x+'px';cd.style.top=y+'px'}
+function hud(){const T=STEPS.filter(x=>x.ok),i=STEPS.slice(0,ts).filter(x=>x.ok).length+(done&&STEPS[ts].ok?1:0);
+ $('#txp').textContent='⭐ '+xp+' XP · Nível '+(1+Math.floor(xp/100));$('#tbar2').style.width=i/T.length*100+'%'}
+function step(n){
+ ts=n;const s=STEPS[n];if(timer)play();if(n===STEPS.length-1)F.tour=true;
+ base=s.go?s.go():null;done=!s.ok;
+ tr.classList.toggle('g',!!s.ok);$('#tcard').classList.remove('done');
+ $('#tt').textContent=s.t;$('#tp').textContent=typeof s.p==='function'?s.p():s.p;$('#th').textContent=s.h||'';
+ const T=STEPS.filter(x=>x.ok);$('#tcn').textContent=s.ok?'Fase '+(T.indexOf(s)+1)+' de '+T.length:'';
+ $('#tmsg').textContent=s.ok?'Faça a ação para liberar a próxima fase…':'';$('#tmsg').classList.remove('pop');
+ $('#tnext').disabled=!done;$('#tnext').textContent=s.b||'Próximo';
+ hud();place(true)}
+function check(){
+ if(ts<0)return;const s=STEPS[ts];
+ if(!done){let r=false;try{r=s.ok(base)}catch(e){}
+  if(r){done=true;xp+=s.x||20;$('#tcard').classList.add('done');const m=$('#tmsg');m.textContent='✔ Fase concluída! +'+(s.x||20)+' XP';void m.offsetWidth;m.classList.add('pop');$('#tnext').disabled=false;hud();ding();party()}}
+ place(false)}
+function tour(on){tr.style.display=on?'block':'none';clearInterval(poll);
+ if(on){xp=0;tip.style.display='none';step(0);poll=setInterval(check,250)}else ts=-1}
 $('#btour').onclick=()=>tour(true);
 $('#tskip').onclick=()=>tour(false);
-$('#tprev').onclick=()=>step(ts-1);
-$('#tnext').onclick=()=>ts>=STEPS.length-1?tour(false):step(ts+1);
-addEventListener('resize',()=>{if(ts>=0)step(ts)});
-addEventListener('keydown',e=>{if(ts<0)return;
- if(e.key==='Escape')tour(false);else if(e.key==='ArrowRight')$('#tnext').click();else if(e.key==='ArrowLeft'&&ts>0)step(ts-1);
- e.stopPropagation()},true);
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));['pj','fx','ms','co'].forEach(k=>$('#p-'+k).hidden=k!==b.dataset.p)});
-const FXD={x:960,y:540,sc:100,rot:0,op:100,bm:'normal',cl:0,cr:0,ct:0,cb:0},FX=it=>it.fx||(it.fx={...FXD});
+$('#tnext').onclick=()=>{if(!done)return;ts>=STEPS.length-1?tour(false):step(ts+1)};
+addEventListener('resize',()=>{if(ts>=0)place(false)});
+addEventListener('keydown',e=>{if(ts>=0&&e.key==='Escape')tour(false)});
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));['pj','fx','ch','ms','co'].forEach(k=>$('#p-'+k).hidden=k!==b.dataset.p)});
+const FXD={x:960,y:540,sc:100,rot:0,op:100,bm:'normal',cl:0,cr:0,ct:0,cb:0,fi:0,fo:0,sp:100,vol:100,ez:'lin',br:100,co:100,sa:100,gs:0,se:0},FX=it=>it.fx||(it.fx={...FXD});
 const LY={};
 function layer(id){if(LY[id])return LY[id];const d=document.createElement('div');d.className='ly';d.innerHTML='<video playsinline></video><img alt=""><div class="blk"></div>';$('#stage').appendChild(d);return LY[id]={d,v:d.children[0],i:d.children[1],b:d.children[2]}}
 ['V1','V2','V3'].forEach(layer);
 const CH='Esconde parte da borda da imagem, sem apagar a mídia original.';
 const BM=[['normal','Normal'],['multiply','Multiplicar'],['screen','Tela'],['overlay','Sobrepor'],['difference','Diferença']];
-const FXG=[['Movimento',[['x','Posição X',-960,2880,1,'px','Move a imagem na horizontal. 960 é o centro de um quadro Full HD (1920 × 1080).'],['y','Posição Y',-540,1620,1,'px','Move a imagem na vertical. 540 é o centro do quadro.'],['sc','Escala',0,300,1,'%','Aumenta ou diminui a imagem. 100% é o tamanho original.'],['rot','Rotação',-180,180,1,'°','Gira a imagem ao redor do centro, em graus.'],['cl','Corte à esquerda',0,100,1,'%',CH],['cr','Corte à direita',0,100,1,'%',CH],['ct','Corte superior',0,100,1,'%',CH],['cb','Corte inferior',0,100,1,'%',CH]]],['Opacidade',[['op','Opacidade',0,100,1,'%','Transparência do clipe. 100% é opaco e 0% é invisível. Com um clipe embaixo, ele aparece por trás.'],['bm']]]];
-const frow=r=>r[0]==='bm'?`<div class="fr" data-k="bm" data-l="Modo de mesclagem" data-h="Define como o clipe se mistura com as camadas de baixo. Multiplicar escurece e Tela clareia."><span style="width:20px;flex:none"></span><span class="fl">Modo de mesclagem</span><select>${BM.map(b=>`<option value="${b[0]}">${b[1]}</option>`).join('')}</select><button class="rs" data-k="bm">↺</button></div>`:`<div class="fr" data-k="${r[0]}" data-l="${r[1]}" data-h="${r[6]}"><button class="sw" data-k="${r[0]}">⏱</button><span class="fl">${r[1]}</span><input type="range" min="${r[2]}" max="${r[3]}" step="${r[4]}"><input type="number" class="fn" step="${r[4]}"><span class="fu">${r[5]}</span><span class="kn"><button class="kp" data-k="${r[0]}">◀</button><button class="kd" data-k="${r[0]}">◆</button><button class="kx" data-k="${r[0]}">▶</button></span><button class="rs" data-k="${r[0]}">↺</button></div>`;
+const SPD='Muda a velocidade de reprodução do clipe. 100% é normal, 200% é o dobro e 50% é câmera lenta.',FIH='Tempo para o clipe aparecer gradualmente. Com outro clipe embaixo, vira um dissolver; sem nada embaixo, é um fade a partir do preto.',FOH='Tempo para o clipe desaparecer gradualmente no final.';
+const ANI=['Animação',[['ez']]];
+const FXG=[['Movimento',[['x','Posição X',-960,2880,1,'px','Move a imagem na horizontal. 960 é o centro de um quadro Full HD (1920 × 1080).'],['y','Posição Y',-540,1620,1,'px','Move a imagem na vertical. 540 é o centro do quadro.'],['sc','Escala',0,300,1,'%','Aumenta ou diminui a imagem. 100% é o tamanho original.'],['rot','Rotação',-180,180,1,'°','Gira a imagem ao redor do centro, em graus.'],['cl','Corte à esquerda',0,100,1,'%',CH],['cr','Corte à direita',0,100,1,'%',CH],['ct','Corte superior',0,100,1,'%',CH],['cb','Corte inferior',0,100,1,'%',CH]]],['Opacidade',[['op','Opacidade',0,100,1,'%','Transparência do clipe. 100% é opaco e 0% é invisível. Com um clipe embaixo, ele aparece por trás.'],['bm']]],['Correção de cor',[['br','Brilho',0,200,1,'%','Clareia ou escurece a imagem. 100% é o original.'],['co','Contraste',0,200,1,'%','Diferença entre claros e escuros. 100% é o original.'],['sa','Saturação',0,300,1,'%','Intensidade das cores. 0% deixa a imagem sem cor.'],['gs','Preto e branco',0,100,1,'%','Remove as cores aos poucos. 100% é totalmente preto e branco.'],['se','Sépia',0,100,1,'%','Aplica um tom amarronzado, de foto antiga.']]],['Transições',[['fi','Fade de entrada',0,5,.1,'s',FIH,1],['fo','Fade de saída',0,5,.1,'s',FOH,1]]],['Remapeamento de tempo',[['sp','Velocidade',25,400,5,'%',SPD,1]]],ANI];
+const FXA=[['Áudio',[['vol','Volume',0,100,1,'%','Volume do clipe. Use quadros-chave (⏱) para criar fades ou baixar o volume em um trecho.'],['fi','Fade de entrada',0,5,.1,'s',FIH,1],['fo','Fade de saída',0,5,.1,'s',FOH,1]]],['Remapeamento de tempo',[['sp','Velocidade',25,400,5,'%',SPD,1]]],ANI];
+let curG=FXG;
+const OPT={bm:['Modo de mesclagem','Define como o clipe se mistura com as camadas de baixo. Multiplicar escurece e Tela clareia.',BM],ez:['Interpolação','Como o valor muda entre quadros-chave. Linear é constante; Suave acelera e desacelera nas pontas.',[['lin','Linear'],['ease','Suave']]]};
+const frow=r=>OPT[r[0]]?`<div class="fr" data-k="${r[0]}" data-l="${OPT[r[0]][0]}" data-h="${OPT[r[0]][1]}"><span style="width:20px;flex:none"></span><span class="fl">${OPT[r[0]][0]}</span><select>${OPT[r[0]][2].map(b=>`<option value="${b[0]}">${b[1]}</option>`).join('')}</select><button class="rs" data-k="${r[0]}">↺</button></div>`:`<div class="fr" data-k="${r[0]}" data-l="${r[1]}" data-h="${r[6]}">${r[7]?'<span style="width:20px;flex:none"></span>':`<button class="sw" data-k="${r[0]}">⏱</button>`}<span class="fl">${r[1]}</span><input type="range" min="${r[2]}" max="${r[3]}" step="${r[4]}"><input type="number" class="fn" step="${r[4]}"><span class="fu">${r[5]}</span>${r[7]?'':`<span class="kn"><button class="kp" data-k="${r[0]}">◀</button><button class="kd" data-k="${r[0]}">◆</button><button class="kx" data-k="${r[0]}">▶</button></span>`}<button class="rs" data-k="${r[0]}">↺</button></div>`;
 let fxSel=-1;
 function fxPane(){
  if(fxSel===sel)return;fxSel=sel;
  const it=items.find(i=>i.id===sel),p=$('#p-fx');
  if(!it){p.innerHTML='<p class="hint" style="padding:10px">Selecione um clipe de vídeo ou foto na timeline (ferramenta Seleção) para editar os efeitos dele.</p>';return}
- if(src(it).t==='a'){p.innerHTML='<p class="hint" style="padding:10px">Clipes de áudio não têm Movimento nem Opacidade. Selecione um clipe de vídeo ou foto.</p>';return}
  const f=FX(it);
- p.innerHTML=`<div class="fxh">${src(it).n}</div>`+FXG.map((g,gi)=>`<div class="fgh"><i>fx</i> ${g[0]}<button class="rs" data-g="${gi}">↺</button></div>`+g[1].map(frow).join('')).join('');
+ p.innerHTML=`<div class="fxh">${src(it).n}</div>`+(src(it).t==='a'?'':PRE)+(curG=src(it).t==='a'?FXA:FXG).map((g,gi)=>`<div class="fgh"><i>fx</i> ${g[0]}<button class="rs" data-g="${gi}">↺</button></div>`+g[1].map(frow).join('')).join('');
  p.querySelectorAll('.fr').forEach(r=>r.querySelectorAll('input,select').forEach(e=>e.value=f[r.dataset.k]));fxLive();
 }
 $('#p-fx').addEventListener('input',e=>{
  const r=e.target.closest('.fr'),it=items.find(i=>i.id===sel);if(!r||!it)return;
- const k=r.dataset.k,f=FX(it),v=k==='bm'?e.target.value:(+e.target.value||0);f[k]=v;
- let nw=false;if(k!=='bm'&&it.kf&&it.kf[k])nw=setKf(it,k,v);
- if(k!=='bm')r.querySelectorAll('input').forEach(x=>{if(x!==e.target)x.value=v});
+ const k=r.dataset.k,f=FX(it),sl=e.target.tagName==='SELECT',v=sl?e.target.value:(+e.target.value||0);push();f[k]=v;
+ let nw=false;if(!sl&&it.kf&&it.kf[k])nw=setKf(it,k,v);
+ if(!sl)r.querySelectorAll('input').forEach(x=>{if(x!==e.target)x.value=v});
  F.fx=true;if(nw)render();else{preview();missions();fxLive()}});
 $('#p-fx').addEventListener('click',e=>{
- const b=e.target.closest('button'),it=items.find(i=>i.id===sel);if(!b||!it)return;
+ const b=e.target.closest('button'),it=items.find(i=>i.id===sel);if(!b||!it)return;push();
  const k=b.dataset.k,f=FX(it),x=kst(it,t),tol=.5/FPS,cl=n=>b.classList.contains(n);
- if(cl('rs')){const ks=b.dataset.g!==undefined?FXG[b.dataset.g][1].map(r=>r[0]):[k];
+ if(b.dataset.pr){const pr=b.dataset.pr;if(pr==='zoom'){it.kf=it.kf||{};it.kf.sc=[{t:it.i,v:100},{t:it.i+it.d,v:125}]}else if(pr==='bw')f.gs=100;else{f.fi=1;f.fo=1}fxSel=-1;render();return}
+ if(cl('rs')){const ks=b.dataset.g!==undefined?curG[b.dataset.g][1].map(r=>r[0]):[k];
   ks.forEach(q=>{f[q]=FXD[q];if(it.kf)delete it.kf[q]});fxSel=-1;render();return}
  if(cl('sw')){it.kf=it.kf||{};
   if(it.kf[k]){f[k]=FV(it,t)[k];delete it.kf[k]}else{it.kf[k]=[];setKf(it,k,f[k])}
@@ -367,8 +419,8 @@ $('#p-fx').addEventListener('click',e=>{
 const kst=(it,tt)=>Math.min(Math.max(tt,it.s),it.s+it.d-.001)-it.s+it.i;
 function kv(it,k,tt){const a=it.kf[k],x=kst(it,tt),l=a[a.length-1];
  if(x<=a[0].t)return a[0].v;if(x>=l.t)return l.v;
- for(let j=1;j<a.length;j++)if(x<=a[j].t){const p=a[j-1],q=a[j];return p.v+(q.v-p.v)*(x-p.t)/(q.t-p.t)}}
-function FV(it,tt){const f={...FX(it)};if(it.kf)for(const k in it.kf)if(it.kf[k].length)f[k]=kv(it,k,tt);return f}
+ for(let j=1;j<a.length;j++)if(x<=a[j].t){const p=a[j-1],q=a[j];let u=(x-p.t)/(q.t-p.t);if(FX(it).ez==='ease')u=u*u*(3-2*u);return p.v+(q.v-p.v)*u}}
+function FV(it,tt){const f={...FXD,...FX(it)};if(it.kf)for(const k in it.kf)if(it.kf[k].length)f[k]=kv(it,k,tt);return f}
 function setKf(it,k,v){const x=kst(it,t),a=it.kf[k],e=a.find(q=>Math.abs(q.t-x)<.5/FPS);
  if(e){e.v=v;return false}a.push({t:x,v});a.sort((p,q)=>p.t-q.t);return true}
 function marks(it){const ts=new Set();if(it.kf)for(const k in it.kf)it.kf[k].forEach(q=>ts.add(q.t));
@@ -377,12 +429,116 @@ function fxLive(){
  const it=items.find(i=>i.id===sel);if(!it||fxSel!==sel)return;
  const f=FV(it,t),x=kst(it,t);
  document.querySelectorAll('#p-fx .fr').forEach(r=>{const k=r.dataset.k;if(k==='bm')return;
-  const a=it.kf&&it.kf[k];r.classList.toggle('on',!!a);r.querySelector('.sw').classList.toggle('on',!!a);
+  const sw=r.querySelector('.sw');if(!sw)return;const a=it.kf&&it.kf[k];r.classList.toggle('on',!!a);sw.classList.toggle('on',!!a);
   r.querySelectorAll('input').forEach(e=>{if(e!==document.activeElement)e.value=Math.round(f[k]*100)/100});
   const kd=r.querySelector('.kd');if(kd)kd.classList.toggle('on',!!(a&&a.some(q=>Math.abs(q.t-x)<.5/FPS)))})}
 function prepFx(){
  let it=items.find(i=>i.id===sel)||items.find(i=>src(i).t==='v');
  if(!it){add('a','V1',0);it=items[items.length-1]}
  sel=it.id;document.querySelector('.tab[data-p="fx"]').click();render()}
+let H=[],R=[],lastP=0,UNC=0;
+const TS={V3:{},V2:{},V1:{},A1:{}};
+const ser=()=>JSON.stringify({items,uid});
+function push(){const n=Date.now();if(n-lastP<500)return;lastP=n;H.push(ser());if(H.length>100)H.shift();R=[]}
+function ld(j){const d=JSON.parse(j);items=d.items;uid=d.uid;sel=null;fxSel=-1;render()}
+function undo(){if(!H.length)return;R.push(ser());ld(H.pop());F.undo=true;UNC++;missions()}
+function redo(){if(!R.length)return;H.push(ser());ld(R.pop())}
+const fade=(it,f)=>{const x=t-it.s;return Math.max(0,Math.min(1,f.fi>0?x/f.fi:1,f.fo>0?(it.d-x)/f.fo:1))};
+$('#bu').onclick=undo;$('#bre').onclick=redo;
+$('.heads').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const o=TS[b.dataset.tr],a=b.dataset.a;o[a]=!o[a];b.classList.toggle('on',!!o[a]);F.trk=true;render()});
+$('#ttl').onclick=()=>{const v=$('#ttxt').value.trim()||'Título',id='u'+Date.now().toString(36)+(++un);SRC.push({id,n:v,c:'#8a3ffc',d:600,dd:5,t:'v',k:'t'});$('#ttxt').value='';renderBin();add(id,'V3',t)};
+const hp=document.createElement('div');hp.id='hp';
+hp.innerHTML='<div class="hc"><b>Atalhos de teclado</b><ul><li>V: Seleção · C: Lâmina · S: dividir no playhead</li><li>Espaço: reproduzir/pausar</li><li>Delete: excluir · Shift+Delete: ripple</li><li>Ctrl+Z: desfazer · Ctrl+Y: refazer</li><li>Esc: fechar tour e janelas</li></ul><button id="hx">Fechar</button></div>';
+document.body.appendChild(hp);
+$('#bhelp').onclick=()=>hp.style.display='flex';
+hp.onclick=e=>{if(e.target===hp||e.target.id==='hx')hp.style.display='none'};
+addEventListener('keydown',e=>{if(e.key==='Escape')hp.style.display='none'});
+Object.assign(TIPS,{bu:['Desfazer','Desfaz a última ação.','Ctrl + Z'],bre:['Refazer','Refaz a ação desfeita.','Ctrl + Y'],bhelp:['Atalhos','Mostra os atalhos de teclado.'],ttl:['Título','Cria um clipe de texto com o que você digitou e o coloca na V3.']});
+let mute=false,AC=null,chA=null;const CD={},UL={};
+const PRE='<div class="pre"><button data-pr="zoom">🔍 Zoom lento</button><button data-pr="bw">⚫ Preto e branco</button><button data-pr="fade">🌗 Fade in e out</button></div>';
+function snd(f){if(mute)return;try{AC=AC||new AudioContext();const o=AC.createOscillator(),g=AC.createGain();o.frequency.value=f;g.gain.value=.05;o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+.12)}catch(e){}}
+function ding(){snd(660);setTimeout(()=>snd(880),110)}
+function party(){if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;for(let i=0;i<28;i++){const d=document.createElement('i');d.className='cf';d.textContent=['🎉','⭐','✨','🎬'][i%4];d.style.cssText='left:'+(10+Math.random()*80)+'vw;animation-delay:'+Math.random()*.4+'s';document.body.appendChild(d);setTimeout(()=>d.remove(),2400)}}
+const tst=document.createElement('div');tst.id='toast';document.body.appendChild(tst);
+function toast(m){tst.textContent=m;tst.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>tst.style.display='none',3200)}
+$('#bsnd').onclick=e=>{mute=!mute;e.target.textContent=mute?'🔇':'🔊'};
+const chg=(i,k)=>i.fx&&i.fx[k]!==undefined&&i.fx[k]!==FXD[k];
+const ACH=[['✂️','Primeiro corte','Cortou um clipe com a Lâmina.',()=>F.cut],['🔗','Mestre do ripple','Usou o excluir com ripple.',()=>F.rip],['🎞','Importador','Importou um arquivo seu.',()=>F.imp],
+['🪟','Camadas','Deixou um clipe semitransparente sobre outro.',()=>items.some(i=>(i.tr==='V2'||i.tr==='V3')&&chg(i,'op'))],['🎬','Animador','Criou uma animação com quadros-chave.',()=>KFC()>=2],
+['🔊','Diretor de áudio','Ajustou volume ou fade de um áudio.',()=>items.some(i=>i.tr==='A1'&&(chg(i,'vol')||chg(i,'fi')||chg(i,'fo')||(i.kf&&i.kf.vol)))],
+['🎨','Colorista','Aplicou correção de cor.',()=>items.some(i=>['br','co','sa','gs','se'].some(k=>chg(i,k)))],['🔤','Titulador','Criou um título.',()=>items.some(i=>src(i).k==='t')],
+['⏩','Controle do tempo','Mudou a velocidade de um clipe.',()=>items.some(i=>chg(i,'sp'))],['↩️','Sem medo de errar','Usou o desfazer.',()=>F.undo],['🔒','Organizador','Usou os controles de trilha.',()=>F.trk],
+['🎮','Tour completo','Concluiu o tour guiado.',()=>F.tour],['🏆','Desafiante','Concluiu um desafio.',()=>F.chal>0],['📽','Cineasta','Exportou um vídeo.',()=>F.exp]];
+function medals(){const n=Object.keys(UL).length;$('#med').innerHTML='<b style="width:100%">Conquistas: '+n+' de '+ACH.length+'</b>'+ACH.map((a,i)=>`<div class="md ${UL[i]?'on':''}" data-l="${a[1]}" data-h="${a[2]}">${a[0]}</div>`).join('')}
+const mk=(sid,tr,s,d)=>({id:uid++,src:sid,tr,s,i:0,d});
+const endT=()=>Math.max(0,...items.map(i=>i.s+i.d));
+const v1ok=()=>{const a=items.filter(i=>i.tr==='V1').sort((p,q)=>p.s-q.s);return a.length>1&&a[0].s<.06&&a.every((c,j)=>!j||Math.abs(c.s-(a[j-1].s+a[j-1].d))<.06)};
+const CHS=[
+{id:'fix',e:'🔧',n:'Corrija a edição',d:'Os clipes da V1 têm buracos entre eles e o vídeo está longo demais. Feche os buracos (exclua com ripple ou arraste os clipes) e deixe o vídeo com no máximo 20 segundos (apare as pontas).',load:()=>[mk('a','V1',0,10),mk('b','V1',13,8),mk('c','V1',23,12)],ok:()=>v1ok()&&endT()<=20.05},
+{id:'vin',e:'✨',n:'Vinheta de abertura',d:'Crie um título com Fade de entrada de pelo menos 1 s e dê Fade de saída de pelo menos 1 s ao clipe de áudio.',load:()=>[mk('a','V1',0,6),mk('d','A1',0,6)],ok:()=>items.some(i=>src(i).k==='t'&&i.fx&&i.fx.fi>=1)&&items.some(i=>i.tr==='A1'&&i.fx&&i.fx.fo>=1)},
+{id:'cur',e:'📱',n:'Vídeo curto de 10 segundos',d:'Monte um vídeo de 9 a 11 segundos com pelo menos 3 clipes de vídeo, 1 título e 1 áudio na A1. Use os clipes de exemplo ou os seus.',load:()=>[],ok:()=>{const e=endT();return e>=8.95&&e<=11.05&&items.filter(i=>i.tr!=='A1'&&src(i).k!=='t').length>=3&&items.some(i=>src(i).k==='t')&&items.some(i=>i.tr==='A1')}},
+{id:'cin',e:'🎞',n:'Look de cinema',d:'Deixe o clipe em preto e branco (Correção de cor) e crie um zoom lento com quadros-chave de Escala. Há botões de predefinição em Controles de efeitos.',load:()=>[mk('b','V1',0,8)],ok:()=>items.some(i=>chg(i,'gs')&&i.fx.gs>=80)&&items.some(i=>i.kf&&i.kf.sc&&i.kf.sc.length>=2)}];
+function chPane(){$('#p-ch').innerHTML=CHS.map(c=>`<div class="chc"><b>${c.e} ${c.n}</b>${CD[c.id]?' <span style="color:#ffd23f">'+'⭐'.repeat(CD[c.id])+'</span>':''}<p>${c.d}</p><button data-c="${c.id}" class="on">${CD[c.id]?'Refazer':'Iniciar'}</button>${chA&&chA.c.id===c.id&&!chA.done?' <span class="hint">em andamento…</span>':''}</div>`).join('')}
+$('#p-ch').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const c=CHS.find(x=>x.id===b.dataset.c);lastP=0;push();items=c.load();sel=null;fxSel=-1;t=0;chA={c,t0:Date.now(),done:false};render();chPane();toast('Desafio iniciado: '+c.n)});
+function awards(){
+ ACH.forEach((a,i)=>{if(UL[i])return;let r=false;try{r=a[3]()}catch(e){}if(r){UL[i]=1;toast('🏅 Conquista: '+a[1]);ding();party();medals()}});
+ if(chA&&!chA.done){let r=false;try{r=chA.c.ok()}catch(e){}
+  if(r){chA.done=true;const sec=Math.round((Date.now()-chA.t0)/1000),st=sec<=90?3:sec<=240?2:1;CD[chA.c.id]=Math.max(CD[chA.c.id]||0,st);F.chal=(F.chal||0)+1;toast('🏆 Desafio concluído em '+sec+' s: '+'⭐'.repeat(st));ding();party();chPane()}}}
+setInterval(awards,800);
+Object.assign(TIPS,{bsnd:['Sons','Liga ou desliga os efeitos sonoros de conclusão.']});
+medals();chPane();
+const BL={normal:'source-over',multiply:'multiply',screen:'screen',overlay:'overlay',difference:'difference'};
+function fit(c,e,w,h,W,H){if(!w||!h)return;const r=Math.min(W/w,H/h),dw=w*r,dh=h*r;c.drawImage(e,(W-dw)/2,(H-dh)/2,dw,dh)}
+function drawFrame(c,W,H){
+ c.globalCompositeOperation='source-over';c.globalAlpha=1;c.filter='none';c.fillStyle='#000';c.fillRect(0,0,W,H);
+ ['V1','V2','V3'].forEach(id=>{
+  const it=TS[id].h?null:items.find(i=>i.tr===id&&t>=i.s&&t<i.s+i.d);if(!it)return;
+  const s=src(it),f=FV(it,t),L=LY[id];
+  c.save();
+  c.translate(W/2+(f.x-960)/1920*W,H/2+(f.y-540)/1080*H);c.rotate(f.rot*Math.PI/180);c.scale(f.sc/100,f.sc/100);c.translate(-W/2,-H/2);
+  c.beginPath();c.rect(f.cl/100*W,f.ct/100*H,W*(1-(f.cl+f.cr)/100),H*(1-(f.ct+f.cb)/100));c.clip();
+  c.globalAlpha=Math.max(0,Math.min(1,f.op/100*fade(it,f)));c.globalCompositeOperation=BL[f.bm]||'source-over';
+  c.filter='brightness('+f.br+'%) contrast('+f.co+'%) saturate('+f.sa+'%) grayscale('+f.gs+'%) sepia('+f.se+'%)';
+  if(s.url&&s.k==='v')fit(c,L.v,L.v.videoWidth,L.v.videoHeight,W,H);
+  else if(s.url&&s.k==='i')fit(c,L.i,L.i.naturalWidth,L.i.naturalHeight,W,H);
+  else{c.textAlign='center';c.textBaseline='middle';c.fillStyle='#fff';
+   if(s.k!=='t'){const g=c.createLinearGradient(0,0,W,H);g.addColorStop(0,s.c);g.addColorStop(1,'#000');c.fillStyle=g;c.fillRect(0,0,W,H);c.fillStyle='#fff'}
+   c.shadowColor='#0008';c.shadowBlur=8;c.font='bold '+(s.k==='t'?64:40)+'px sans-serif';c.fillText(s.n,W/2,H/2)}
+  c.restore()})}
+const ex=document.createElement('div');ex.id='ex';
+ex.innerHTML='<div class="hc" style="width:min(540px,92vw)"><b>Exportar vídeo</b><p id="exm"></p><div class="xp"><div id="exb"></div></div><div id="exv"></div><button id="exc">Cancelar</button></div>';
+document.body.appendChild(ex);
+let exR=null;
+$('#exc').onclick=()=>{if(exR&&exR.live)exR.stop();else{ex.style.display='none';$('#exv').innerHTML=''}};
+async function exportVideo(){
+ const end=endT();
+ if(!end){toast('Adicione clipes à timeline antes de exportar.');return}
+ if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){toast('Este navegador não suporta exportação. Use Chrome, Edge ou Firefox.');return}
+ if(timer)play();
+ const W=1280,H=720,cv=document.createElement('canvas');cv.width=W;cv.height=H;const c=cv.getContext('2d');
+ AC=AC||new AudioContext();await AC.resume();
+ const dest=AC.createMediaStreamDestination(),els=[LY.V1.v,LY.V2.v,LY.V3.v,$('#pa')];
+ els.forEach(e=>{if(!e._s){e._s=AC.createMediaElementSource(e);e._s.connect(AC.destination)}e._s.connect(dest)});
+ const mt=['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+ if(!mt){toast('Este navegador não suporta os formatos de exportação.');return}
+ const rec=new MediaRecorder(new MediaStream([...cv.captureStream(30).getVideoTracks(),...dest.stream.getAudioTracks()]),{mimeType:mt,videoBitsPerSecond:5e6}),ch=[];
+ let cancel=false;
+ rec.ondataavailable=e=>{if(e.data.size)ch.push(e.data)};
+ ex.style.display='flex';$('#exv').innerHTML='';$('#exb').style.width='0%';$('#exc').textContent='Cancelar';
+ $('#exm').textContent='Exportando em tempo real: leva cerca de '+Math.ceil(end)+' s. Mantenha esta aba aberta e visível.';
+ rec.onstop=()=>{els.forEach(e=>e._s.disconnect(dest));exR.live=false;
+  if(cancel){ex.style.display='none';return}
+  const ext=mt.startsWith('video/mp4')?'mp4':'webm',u=URL.createObjectURL(new Blob(ch,{type:mt.split(';')[0]}));
+  $('#exm').textContent='Pronto! Assista abaixo e baixe o arquivo. Se o download não começar, clique com o botão direito no vídeo e escolha Salvar vídeo como.';
+  $('#exb').style.width='100%';
+  $('#exv').innerHTML='<video controls src="'+u+'" style="width:100%;margin:8px 0;background:#000"></video><a class="btnl" href="'+u+'" download="video-editado.'+ext+'">⬇ Baixar vídeo (.'+ext+')</a>';
+  $('#exc').textContent='Fechar';F.exp=true;ding();party()};
+ exR={live:true,stop:()=>{cancel=true;if(rec.state!=='inactive')rec.stop();if(timer)play()}};
+ t=0;pos();rec.start(500);play();
+ const loop=()=>{if(rec.state==='inactive')return;drawFrame(c,W,H);$('#exb').style.width=Math.min(100,t/end*100)+'%';
+  if(!timer)setTimeout(()=>{if(rec.state!=='inactive')rec.stop()},300);else requestAnimationFrame(loop)};
+ requestAnimationFrame(loop)}
+$('#bexp').onclick=exportVideo;
+Object.assign(TIPS,{bexp:['Exportar vídeo','Grava a timeline em tempo real e gera um arquivo de vídeo (MP4 ou WebM) para baixar. Funciona melhor no Chrome e no Edge.']});
 renderBin();setTool('v');render();
 </script></body></html>
