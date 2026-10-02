@@ -635,4 +635,80 @@ setBeg(true);
 let seen=null;try{seen=localStorage.getItem('ee_v1')}catch(e){}
 if(!seen){try{localStorage.setItem('ee_v1','1')}catch(e){}setTimeout(startTour,500)}
 })();
+</script><!-- RODADA 2 · FAMILIARIDADE COM AS FERRAMENTAS
+     Cole este bloco inteiro DEPOIS do bloco da Rodada 1 e ANTES de </body>. -->
+<style>
+#hb{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:6px 10px;background:var(--pn2);border-bottom:1px solid var(--bd);border-left:3px solid var(--ac)}
+#hbt{flex:1;min-width:220px}
+#hbt small{display:block;color:var(--mu);margin-top:2px}
+#hbt em{font-style:normal;color:#4aa3ff}
+@keyframes pls{50%{box-shadow:0 0 0 6px #2d8ceb88}}
+.pulse{animation:pls 1s infinite}
+@media (prefers-reduced-motion:reduce){.pulse{animation:none;outline:2px solid #ffd23f}}
+@media (pointer:coarse){#bzero,#brec{min-height:38px}}
+</style>
+<script>
+(function(){
+// ---------- Faixa de ajuda (ideias 2, 4 e 5) ----------
+const hb=document.createElement('div');hb.id='hb';
+hb.innerHTML='<div id="hbt"></div><button id="bzero" class="on"></button>';
+$('.tlh').after(hb);
+const ht=$('#hbt'),bz=$('#bzero');
+const TL={
+ v:['Selecionar: clique num clipe para escolhê-lo e arraste para mover. Puxe a ponta para aparar.','Pense na linha do tempo como pedaços de fita colados em ordem.','Ferramenta de Seleção (V)'],
+ c:['Cortar: clique no ponto do clipe onde quer o corte. Nada é apagado, o clipe só vira dois pedaços.','É como passar uma tesoura na fita. Os dois pedaços continuam inteiros.','Ferramenta Lâmina (C)']};
+let msgOn=false,msgT=0,lastH='';
+const put=h=>{if(h!==lastH){lastH=h;ht.innerHTML=h}};
+function seq(){const a=items.filter(i=>i.tr==='V1').sort((p,q)=>p.s-q.s);if(!a.length||a[0].s>=.06)return 0;let n=1;while(n<a.length&&Math.abs(a[n].s-(a[n-1].s+a[n-1].d))<.06)n++;return n}
+const Z={id:'zero',e:'🌱',n:'Desafio zero: 3 clipes em sequência',d:'Coloque 3 clipes na faixa de vídeo, um depois do outro, sem buracos. Use ＋ Adicionar.',load:()=>[],ok:()=>seq()>=3};
+CHS.unshift(Z);chPane();
+const act=()=>!!(chA&&chA.c===Z&&!chA.done);
+function upd(){
+ if(msgOn)return;
+ const d=TL[tool]||TL.v;
+ put((act()?'<b>🌱 Desafio zero: '+Math.min(seq(),3)+' de 3 clipes em sequência.</b> Clique em ＋ Adicionar na lista.<br>':'')+
+  '<b>'+d[0]+'</b><small>'+d[1]+' <em>No Premiere: '+d[2]+'</em></small><small>💡 Nada aqui apaga o arquivo original: cortar, aparar e apagar só mexem na linha do tempo.</small>');
+ bz.textContent=CD.zero?'🌱 Refazer desafio zero '+'⭐'.repeat(CD.zero):'🌱 Desafio zero: 3 clipes em sequência'}
+function say(m,p){msgOn=true;lastH='';ht.innerHTML='<b>'+m+'</b>'+(p?'<small><em>No Premiere: '+p+'</em></small>':'');
+ clearTimeout(msgT);msgT=setTimeout(()=>{msgOn=false;upd()},6000)}
+const s0=setTool;setTool=function(x){s0(x);upd()};
+setInterval(()=>{upd();document.querySelectorAll('.ad').forEach(b=>b.classList.toggle('pulse',act()))},700);
+
+// ---------- Desafio zero (ideia 6) ----------
+bz.onclick=()=>{lastP=0;push();items=Z.load();sel=null;fxSel=-1;t=0;chA={c:Z,t0:Date.now(),done:false};render();chPane();toast('Desafio iniciado: '+Z.n);upd()};
+
+// ---------- Avisos amigáveis (ideia 3) ----------
+const a0=add;add=function(sid,trid,s){
+ const sc=SRC.find(x=>x.id===sid),tr=TR.find(x=>x.id===trid);
+ if(sc&&tr){
+  if(tr.t!==sc.t){say(sc.t==='a'?'Áudio só entra na faixa de áudio (A1).':'Vídeo e fotos só entram nas faixas de vídeo (V1, V2, V3).');return}
+  if(TS[trid].l){say('🔒 Essa trilha está travada. Clique no cadeado da trilha para destravar.');return}}
+ a0(sid,trid,s)};
+$('#inner').addEventListener('pointerdown',e=>{const c=e.target.closest('.clip');if(!c)return;const it=items.find(i=>i.id==c.dataset.id);if(it&&TS[it.tr].l)say('🔒 Essa trilha está travada. Clique no cadeado da trilha para destravar.')});
+const c0=cut;cut=function(it,x){const n=items.length;c0(it,x);if(items.length===n)say('Corte perto demais da ponta do clipe. Clique mais para dentro.')};
+const d0=del;del=function(r){
+ if(!items.some(i=>i.id===sel)){say('Primeiro clique num clipe para selecioná-lo (ferramenta Selecionar).','clique no clipe com a Seleção (V)');return}
+ d0(r);
+ r?say('Clipe apagado e o espaço foi fechado: os seguintes avançaram, como puxar a fita para juntar as pontas.','Ripple Delete (Shift+Delete)')
+  :say('Clipe apagado. Ficou um buraco (tela preta) onde ele estava. Para fechar o buraco, use "Apagar e fechar".','Delete')};
+$('#play').addEventListener('click',()=>{if(!items.length)say('Adicione um clipe primeiro: clique em ＋ Adicionar na lista.')});
+$('#bu').addEventListener('click',()=>say('Desfeito. Dá para desfazer várias vezes seguidas.','Ctrl+Z'));
+const q0=pos;pos=function(){q0();const m=$('#mtxt');if(items.length&&m.textContent.startsWith('Sem clipe'))m.innerHTML='<small>Tela preta: não há clipe sob a linha azul. Clique na régua de tempo para levar a linha azul até um clipe.</small>'};
+
+// ---------- Premiere nas dicas (ideia 5) ----------
+const PR={bv:'Ferramenta de Seleção',bc:'Ferramenta Lâmina',bs:'Adicionar edição (Ctrl+K)',bd:'Delete',br:'Ripple Delete'};
+for(const k in PR)if(TIPS[k])TIPS[k][1]+=' No Premiere: '+PR[k]+'.';
+
+// ---------- Recomeçar (ideia 7) ----------
+const rb=document.createElement('button');rb.id='brec';rb.textContent='↺ Recomeçar';$('#bexp').before(rb);
+TIPS.brec=['Recomeçar','Limpa a linha do tempo para começar de novo. Seus arquivos originais continuam na lista e dá para desfazer com Ctrl+Z.'];
+TIPS.bzero=['Desafio zero','Monte 3 clipes em sequência na faixa de vídeo. É o primeiro passo de qualquer edição.'];
+rb.onclick=()=>{
+ if(!items.length){say('A linha do tempo já está vazia.');return}
+ if(!confirm('Recomeçar limpa a linha do tempo. Seus arquivos originais continuam na lista e dá para desfazer com Ctrl+Z. Continuar?'))return;
+ lastP=0;push();items=[];sel=null;fxSel=-1;t=0;chA=null;render();chPane();
+ say('Linha do tempo limpa. Seus arquivos originais continuam na lista.')};
+
+upd();pos();
+})();
 </script></body></html>
