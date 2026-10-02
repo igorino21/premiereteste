@@ -735,4 +735,123 @@ const fx=CHS.find(x=>x.id==='fix');
 if(fx)fx.load=()=>[mk('a','V1',0,10),mk('b','V1',13,8),mk('c','V1',23,6)];
 renderBin();render();
 })();
+</script><!-- RODADA 4 · MINIATURAS, GLOSSÁRIO, FONTE A+, EXEMPLO E RECEITAS
+     Cole este bloco DEPOIS dos blocos das Rodadas 1, 2 e 3 e ANTES de </body>. -->
+<style>
+:root{--k:1}
+body{font-size:calc(12px*var(--k))}
+#hbt,.hint,.fl,#tcard,#tip,#rc,#gl{font-size:calc(12px*var(--k))}
+.clip,.th,.th button{font-size:calc(11px*var(--k))}
+.tk,.tbar small,.th small,.clip i{font-size:calc(10px*var(--k))}
+#empty{font-size:calc(13px*var(--k))}
+#rc{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:6px 10px;border-bottom:1px solid var(--bd)}
+#rc .lb{color:var(--mu)}
+#rcm{flex-basis:100%}
+#rcm:empty{display:none}
+.gt{background:none;border:0;border-bottom:1px dotted #4aa3ff;color:#4aa3ff;padding:0;cursor:help;font:inherit}
+#gl{position:fixed;left:50%;bottom:16px;transform:translateX(-50%);width:min(420px,calc(100vw - 16px));max-height:70vh;overflow:auto;background:var(--pn);border:1px solid var(--ac);border-radius:10px;padding:12px 14px;z-index:96;display:none;box-shadow:0 8px 30px #0006}
+#gl dt{color:#4aa3ff}
+@media (pointer:coarse){#rc button,#bgl,#bfs{min-height:38px}}
+</style>
+<script>
+(function(){
+// ---------- Barra de receitas + exemplo (ideias 7 e 8) ----------
+const RC={
+ cine:{e:'🎬',n:'Look de cinema',f:{co:120,sa:80,br:95},z:112,d:'contraste 120%, saturação 80%, brilho 95% e um zoom lento de 100% a 112%'},
+ slow:{e:'🐢',n:'Câmera lenta',f:{sp:50},d:'velocidade 50%, metade da velocidade normal'},
+ soft:{e:'🌅',n:'Entrada suave',f:{fi:1,fo:1},d:'fade de entrada e de saída de 1 segundo'},
+ vint:{e:'📼',n:'Vintage',f:{se:70,co:110,sa:85},d:'sépia 70%, contraste 110% e saturação 85%'}};
+const rc=document.createElement('div');rc.id='rc';
+rc.innerHTML='<span class="lb">Receitas de efeito (no clipe selecionado):</span>'+
+ Object.keys(RC).map(k=>'<button data-rc="'+k+'">'+RC[k].e+' '+RC[k].n+'</button>').join('')+
+ '<button data-rc="off">↺ Sem efeito</button><span style="flex:1"></span><button id="bex" class="on">📂 Abrir exemplo</button><div id="rcm"></div>';
+(document.getElementById('hb')||$('.tlh')).after(rc);
+const msg=h=>{$('#rcm').innerHTML=h};
+rc.addEventListener('click',e=>{
+ const b=e.target.closest('[data-rc]');if(!b)return;
+ const it=items.find(i=>i.id===sel);
+ if(!it||src(it).t==='a'){msg('Primeiro clique num clipe de vídeo na linha do tempo (ferramenta Selecionar). Depois escolha a receita.');return}
+ lastP=0;push();const k=b.dataset.rc;
+ if(k==='off'){it.fx={...FXD};delete it.kf;msg('Efeitos removidos deste clipe. Ele voltou ao original.')}
+ else{const r=RC[k],f=FX(it);Object.assign(f,r.f);
+  if(r.z){it.kf=it.kf||{};it.kf.sc=[{t:it.i,v:100},{t:it.i+it.d,v:r.z}]}
+  msg('<b>'+r.n+' aplicado:</b> '+r.d+'. Para ver e mexer nesses valores, ative o Modo completo e abra Controles de efeitos. Ctrl+Z desfaz.')}
+ F.fx=true;fxSel=-1;render()});
+$('#bex').onclick=()=>{
+ if(items.length&&!confirm('Abrir o exemplo substitui o que está na linha do tempo. Dá para desfazer com Ctrl+Z. Continuar?'))return;
+ lastP=0;push();
+ const a=mk('a','V1',0,6),c=mk('c','V1',6,6.2),b=mk('b','V1',12.2,6),m=mk('d','A1',0,18.2);
+ a.i=2;b.i=1;
+ a.fx={...FXD,fi:1};c.kf={sc:[{t:0,v:100},{t:6.2,v:115}]};b.fx={...FXD,fo:1.5};m.fx={...FXD,fi:1,fo:2};
+ items=[a,c,b,m];sel=a.id;t=0;fxSel=-1;chA=null;render();chPane();
+ msg('<b>Exemplo aberto.</b> São 3 clipes na faixa de vídeo: o primeiro e o último tiveram as pontas aparadas, a floresta tem zoom lento e há fades de entrada e de saída. Clique em cada clipe, mude o que quiser e aperte ▶. Ctrl+Z desfaz.')};
+
+// ---------- Miniaturas nos clipes (ideia 1) ----------
+const TH={},TQ={};
+function mkThumb(s){
+ if(TQ[s.id])return;TQ[s.id]=1;
+ const v=document.createElement('video');v.muted=true;v.preload='auto';v.playsInline=true;
+ v.onloadeddata=()=>{v.currentTime=Math.min(1,(v.duration||2)/2)};
+ v.onseeked=()=>{v.onseeked=null;
+  try{const W=160,H=90,c=document.createElement('canvas');c.width=W;c.height=H;
+   const x=c.getContext('2d'),r=Math.max(W/v.videoWidth,H/v.videoHeight);
+   x.drawImage(v,(W-v.videoWidth*r)/2,(H-v.videoHeight*r)/2,v.videoWidth*r,v.videoHeight*r);
+   TH[s.id]=c.toDataURL('image/jpeg',.6);render()}catch(err){}};
+ v.src=s.url}
+const r0=render;
+render=function(){r0();
+ document.querySelectorAll('.clip[data-id]').forEach(el=>{
+  const it=items.find(i=>i.id==el.dataset.id),s=it&&src(it);
+  if(!s||!s.url||s.k!=='v')return;
+  if(!TH[s.id]){mkThumb(s);return}
+  el.style.backgroundImage='linear-gradient(#0008,#0000 65%),url('+TH[s.id]+')';
+  el.style.backgroundSize='auto,auto 100%';el.style.backgroundRepeat='no-repeat,repeat-x';el.style.backgroundPosition='0 0,0 0'})};
+
+// ---------- Glossário clicável (ideia 3) ----------
+const GL={
+ trim:['Aparar (trim)','Encurtar o início ou o fim do clipe sem apagar o arquivo original. Como dobrar a ponta de uma fita.'],
+ ripple:['Ripple','Ao apagar, os clipes seguintes avançam e fecham o buraco. Como puxar a fita para juntar as pontas.'],
+ playhead:['Playhead (linha azul)','Marca o instante que aparece no monitor. É a agulha que lê a fita.'],
+ lamina:['Lâmina','Ferramenta que corta o clipe em dois. A tesoura da edição.'],
+ preta:['Tela preta','Nenhum clipe está sob a linha azul naquele instante.'],
+ keyframe:['Quadro-chave (keyframe)','Marca o valor de um efeito em um instante. Entre dois quadros-chave, o programa cria a animação sozinho.'],
+ timeline:['Linha do tempo (timeline)','Onde os clipes são organizados em ordem, da esquerda para a direita.'],
+ trilha:['Trilha','Camada da linha do tempo. Na imagem, a trilha de cima cobre a de baixo.']};
+const KEY=m=>{m=m.toLowerCase();return m==='aparar'?'trim':m==='ripple'?'ripple':m==='linha azul'?'playhead':m==='lâmina'?'lamina':m==='tela preta'?'preta':/^quadro/.test(m)?'keyframe':m==='linha do tempo'?'timeline':'trilha'};
+const RX=/\b(aparar|ripple|linha azul|lâmina|tela preta|quadros?-chave|linha do tempo|trilhas?)\b/gi;
+function link(root){
+ const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('.gt')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT}),L=[];
+ while(w.nextNode())L.push(w.currentNode);
+ L.forEach(n=>{const s=n.nodeValue;RX.lastIndex=0;if(!RX.test(s))return;RX.lastIndex=0;
+  const f=document.createDocumentFragment();let i=0,m;
+  while((m=RX.exec(s))){if(m.index>i)f.append(s.slice(i,m.index));
+   const b=document.createElement('button');b.className='gt';b.dataset.g=KEY(m[0]);b.textContent=m[0];f.append(b);i=m.index+m[0].length}
+  if(i<s.length)f.append(s.slice(i));n.replaceWith(f)})}
+const gl=document.createElement('div');gl.id='gl';document.body.appendChild(gl);
+function showG(keys){gl.innerHTML='<dl>'+keys.map(k=>'<dt>'+GL[k][0]+'</dt><dd>'+GL[k][1]+'</dd>').join('')+'</dl><button id="glx">Fechar</button>';gl.style.display='block'}
+[document.getElementById('hbt'),$('#rcm')].forEach(el=>{
+ if(!el)return;
+ const ob=new MutationObserver(()=>{ob.disconnect();link(el);ob.observe(el,{childList:true,subtree:true})});
+ ob.observe(el,{childList:true,subtree:true});link(el);
+ el.addEventListener('click',e=>{const b=e.target.closest('.gt');if(b)showG([b.dataset.g])})});
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#gl,.gt,#bgl'))gl.style.display='none'});
+gl.addEventListener('click',e=>{if(e.target.id==='glx')gl.style.display='none'});
+addEventListener('keydown',e=>{if(e.key==='Escape')gl.style.display='none'});
+const bg=document.createElement('button');bg.id='bgl';bg.textContent='📖 Glossário';
+bg.onclick=()=>showG(Object.keys(GL));
+
+// ---------- Fonte maior A+ (ideia 5) ----------
+const bf=document.createElement('button');bf.id='bfs';
+const KS=[1,1.15,1.3,1.5];let ki=0;
+try{ki=Math.max(0,Math.min(3,+localStorage.getItem('ee_k')||0))}catch(e){}
+function setK(){document.documentElement.style.setProperty('--k',KS[ki]);bf.textContent='A+ '+Math.round(KS[ki]*100)+'%';try{localStorage.setItem('ee_k',ki)}catch(e){}}
+bf.onclick=()=>{ki=(ki+1)%KS.length;setK()};
+
+$('#bexp').before(bg,bf);
+Object.assign(TIPS,{
+ bgl:['Glossário','Explica em uma linha os termos da edição, com analogias. Os termos sublinhados em azul nas dicas também podem ser tocados.'],
+ bfs:['Tamanho do texto','Aumenta o texto do simulador em 4 níveis (100%, 115%, 130%, 150%). Útil no projetor e no celular.'],
+ bex:['Abrir exemplo','Carrega uma edição pronta para você explorar e modificar.']});
+setK();render();
+})();
 </script></body></html>
