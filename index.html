@@ -1397,4 +1397,230 @@ addEventListener('keydown',e=>{if(e.key==='Escape'){cola.style.display='none';ls
 window.EE={runDemo,NEXT,sync6,showLost};
 sync6();render();
 })();
+</script><!-- RODADA 7 · JOGO "TV DA ESCOLA"
+     Cole DEPOIS do bloco das Rodadas 5 e 6 e ANTES de </body>.
+     Campanha de 6 pedidos, 2 minijogos, cargos, estrelas e código de resultado para o professor.
+     Para desfazer, apague este bloco inteiro. -->
+<style>
+#gm{position:fixed;inset:0;z-index:92;background:#000d;display:none;align-items:flex-start;justify-content:center;overflow:auto;padding:24px 12px}
+.gc{background:var(--pn);border:1px solid var(--bd);border-radius:12px;width:min(780px,100%);padding:16px 18px}
+.gc h2{margin:0 0 2px;font-size:calc(21px*var(--k))}.gc h3{margin:14px 0 4px;font-size:calc(14px*var(--k))}
+.gtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.rk{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--pn2);border-radius:8px;padding:10px 12px;margin:10px 0}
+.rk .big{font-size:calc(28px*var(--k))}.rk .bar2{flex:1;min-width:140px}
+.bar2 div{height:6px;background:var(--bd);border-radius:3px}.bar2 div i{display:block;height:6px;background:#ffd23f;border-radius:3px}
+.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+.mi{border:1px solid var(--bd);border-radius:10px;padding:10px;background:var(--pn2);display:flex;flex-direction:column;gap:5px}
+.mi.lk{opacity:.5}.mi small{color:var(--mu)}
+.stars{color:#ffd23f;letter-spacing:2px}
+.gcode{display:flex;gap:6px;flex-wrap:wrap}
+.gcode input{flex:1;min-width:180px;background:#161616;color:var(--tx);border:1px solid var(--bd);border-radius:3px;padding:5px 8px;font-family:ui-monospace,Consolas,monospace}
+#mc{position:fixed;right:12px;top:48px;z-index:87;width:min(350px,calc(100vw - 24px));max-height:80vh;overflow:auto;background:var(--pn);border:1px solid #ffd23f;border-radius:10px;padding:12px 14px;box-shadow:0 8px 30px #0008;display:none}
+#mc .mh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#mc.min .mb{display:none}
+#mc ul{list-style:none;margin:6px 0;padding:0}#mc li{padding:3px 0;display:flex;gap:6px;color:var(--mu)}
+#mc li:before{content:"○"}#mc li.ok{color:var(--ok)}#mc li.ok:before{content:"✓"}
+#mc li.bn:before{content:"☆"}#mc li.bn.ok:before{content:"★";color:#ffd23f}
+#mc .say{background:var(--pn2);border-left:3px solid #ffd23f;padding:6px 8px;margin:8px 0;border-radius:4px}
+#mc .btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+#mcf{margin:6px 0;color:#ffb86b;min-height:16px}
+#mc .res{text-align:center}#mc .res .stars{font-size:calc(34px*var(--k))}
+.gaming #stp{display:none!important}
+.gaming .nudge,.gaming .pt{animation:none;outline:none}
+.gaming #lost{display:none!important}
+@media (pointer:coarse){#bgame,.mi button,#mc button,.gcode button{min-height:38px}}
+</style>
+<script>
+(function(){
+const beg=()=>document.body.classList.contains('beg');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const V1s=()=>items.filter(i=>i.tr==='V1').sort((a,b)=>a.s-b.s);
+const contig=a=>a.length>0&&a[0].s<.06&&a.every((c,j)=>!j||Math.abs(c.s-(a[j-1].s+a[j-1].d))<.06);
+const noOver=a=>a.every((c,j)=>!j||c.s>=a[j-1].s+a[j-1].d-.06);
+const vEnd=()=>Math.max(0,...items.filter(i=>i.tr!=='A1').map(i=>i.s+i.d));
+const fxv=(i,k)=>i&&i.fx&&i.fx[k]!==undefined?i.fx[k]:FXD[k];
+const titles=()=>items.filter(i=>src(i).k==='t'&&!/^gw/.test(i.src));
+const aud=()=>items.find(i=>i.tr==='A1');
+const srcs=()=>V1s().map(i=>i.src).join('');
+
+/* ---------- progresso salvo ---------- */
+let G={name:'',s:[0,0,0,0,0,0,0,0]};
+try{const j=JSON.parse(localStorage.getItem('ee_game'));if(j&&Array.isArray(j.s)&&j.s.length===8)G=j}catch(e){}
+const save=()=>{try{localStorage.setItem('ee_game',JSON.stringify(G))}catch(e){}};
+
+/* ---------- cartas do minijogo "fluxo de trabalho" (ficam fora da lista de mídia) ---------- */
+const WF=['Planejar e gravar','Importar arquivos','Montar e cortar','Cor e som','Exportar'];
+WF.forEach((n,i)=>SRC.push({id:'gw'+(i+1),n,c:'#8a3ffc',d:600,dd:5,t:'v',k:'t'}));
+let showGW=false;
+const rb2=renderBin;
+renderBin=function(){rb2();if(!showGW)document.querySelectorAll('#binl .bi').forEach(r=>{if(/^gw/.test(r.dataset.id))r.remove()})};
+renderBin();
+
+/* ---------- pedidos, minijogos ---------- */
+const GAMES=[
+{e:'✂️',t:'Abertura rápida',who:'Coordenadora Marta',kind:'m',full:false,
+ say:'O clipe da praia tem 10 segundos, mas só preciso dos 5 primeiros para a abertura do jornal. Pode aparar?',
+ load:()=>[mk('a','V1',0,10)],
+ req:[['O vídeo deve ficar com cerca de 5 segundos (entre 4,5 e 5,5 s)',()=>{const e=vEnd();return e>=4.5&&e<=5.5&&V1s().length>=1}],
+      ['Mantenha o começo do clipe: ele deve começar em 0:00, sem aparar o início',()=>{const a=V1s();return a.length>0&&a[0].s<.06&&a[0].i<.06}]],
+ bonus:[['Sem buracos: o vídeo todo está colado, sem espaço vazio',()=>contig(V1s())],['Reproduza o resultado (▶) antes de entregar',()=>GP]],
+ hints:['Puxe a ponta direita do clipe para a esquerda até chegar perto de 5 s na régua.','Outro jeito: clique na régua em 5 s, use ✂ Cortar aqui e apague o pedaço da direita.']},
+{e:'🧹',t:'Tira o intervalo',who:'Editor Beto',kind:'m',full:false,
+ say:'A gravação tem um trecho parado do 3º ao 6º segundo. Tire esse pedaço e deixe o vídeo continuar sem tela preta.',
+ load:()=>[mk('a','V1',0,10)],
+ req:[['Sem tela preta: os pedaços devem ficar colados, sem buraco (e em 2 ou mais pedaços)',()=>{const a=V1s();return a.length>=2&&contig(a)}],
+      ['O vídeo final deve ter cerca de 7 segundos (entre 6,5 e 7,5 s)',()=>{const e=vEnd();return e>=6.5&&e<=7.5}]],
+ bonus:[['Use "Apagar e fechar" (ripple)',()=>!!F.rip],['Nenhum pedaço com menos de 1 segundo',()=>V1s().length>0&&V1s().every(i=>i.d>=1)]],
+ hints:['Corte em dois pontos (em 3 s e em 6 s) para isolar o pedaço do meio.','Selecione o pedaço do meio e use Apagar e fechar: os seguintes avançam sozinhos.']},
+{e:'🔀',t:'Ordem da história',who:'Repórter Lia',kind:'m',full:false,
+ say:'O passeio começou na cidade, passou pela praia e terminou na floresta. Coloque os clipes nessa ordem.',
+ load:()=>[mk('a','V1',0,10),mk('c','V1',10,12),mk('b','V1',22,8)],
+ req:[['A ordem deve ser: Cidade, Praia, Floresta',()=>srcs()==='bac'],['Os clipes não podem ficar um por cima do outro',()=>noOver(V1s())]],
+ bonus:[['Sem buracos entre os clipes',()=>contig(V1s())],['Vídeo final com no máximo 22 segundos (apare as pontas)',()=>vEnd()<=22.3]],
+ hints:['Arraste um clipe: a ponta gruda no vizinho (snap). Mova um por vez.','Se atrapalhar, use ◀ Mais cedo / Mais tarde ▶ para ajustar o clipe selecionado.']},
+{e:'🔤',t:'Título do jornal',who:'Diretor Paulo',kind:'m',full:true,
+ say:'Preciso de um título no vídeo, aparecendo suavemente. Use o campo "Texto do título".',
+ load:()=>[mk('b','V1',0,8)],
+ req:[['Crie um título (texto) na linha do tempo',()=>titles().length>0],['O título deve ficar na camada V3, acima do vídeo',()=>titles().some(i=>i.tr==='V3')],['Dê fade de entrada de pelo menos 1 segundo ao título',()=>titles().some(i=>fxv(i,'fi')>=1)]],
+ bonus:[['Dê também um fade de saída de 1 segundo',()=>titles().some(i=>fxv(i,'fo')>=1)],['Tire o título do centro (mude a Posição X ou Y)',()=>titles().some(i=>fxv(i,'x')!==960||fxv(i,'y')!==540)]],
+ hints:['Digite o texto no campo, clique em ＋ Título e ele entra na V3.','Selecione o título, abra Controles de efeitos e use "Fade de entrada" em Transições.']},
+{e:'🎵',t:'Trilha sonora',who:'Produtora Carla',kind:'m',full:true,
+ say:'A música é longa demais e muito alta. Coloque a trilha, baixe o volume e faça ela terminar junto com o vídeo.',
+ load:()=>[mk('b','V1',0,8)],
+ req:[['Coloque a Trilha.mp3 na camada A1',()=>!!aud()],['Volume da trilha em 50% ou menos',()=>!!aud()&&fxv(aud(),'vol')<=50],['A música deve acabar junto com o vídeo (diferença de até 1 s)',()=>!!aud()&&Math.abs(aud().s+aud().d-vEnd())<=1]],
+ bonus:[['Fade de saída de pelo menos 1,5 s na música',()=>!!aud()&&fxv(aud(),'fo')>=1.5],['Fade de entrada de pelo menos 1 s na música',()=>!!aud()&&fxv(aud(),'fi')>=1]],
+ hints:['Clique em ＋ Adicionar na Trilha.mp3. Depois puxe a ponta dela até o fim do vídeo.','Selecione a música, abra Controles de efeitos: Volume e os fades ficam lá.']},
+{e:'🎬',t:'Look de cinema',who:'Diretora Júlia',kind:'m',full:true,
+ say:'Para a matéria final, quero clima de cinema: preto e branco e um zoom lento, como se a câmera se aproximasse.',
+ load:()=>[mk('c','V1',0,6.2)],
+ req:[['Deixe o clipe em preto e branco (80% ou mais)',()=>items.some(i=>src(i).k!=='t'&&fxv(i,'gs')>=80)],
+      ['Crie um zoom lento com quadros-chave de Escala, terminando em 115% ou mais',()=>items.some(i=>i.kf&&i.kf.sc&&i.kf.sc.length>=2&&Math.max(...i.kf.sc.map(q=>q.v))>=115)]],
+ bonus:[['Fade de entrada de 1 segundo',()=>items.some(i=>src(i).k!=='t'&&fxv(i,'fi')>=1)],['Fade de saída de 1 segundo',()=>items.some(i=>src(i).k!=='t'&&fxv(i,'fo')>=1)]],
+ hints:['Controles de efeitos > Correção de cor > Preto e branco = 100%.','Ligue o cronômetro ⏱ da Escala, leve a linha azul ao fim do clipe e mude a Escala para 120%.','Atalho: os botões de predefinição "Zoom lento" e "Preto e branco" fazem isso com um clique.']},
+{e:'🔍',t:'Caça-erros',who:'Minijogo',kind:'h',full:false,
+ say:'Esta edição tem 3 defeitos escondidos. Ache e conserte todos! Não vale apagar tudo.',
+ load:()=>[mk('a','V1',0,10),mk('b','V1',12,8),mk('b','V1',20,8),mk('c','V1',28,12)],
+ req:[['🔍 Defeito escondido 1',()=>{const a=V1s();return a.length>=3&&contig(a)},'Buraco (tela preta) entre os clipes fechado'],
+      ['🔍 Defeito escondido 2',()=>{const a=V1s();return a.length>=3&&a.every((c,j)=>!j||c.src!==a[j-1].src)},'Clipe repetido removido'],
+      ['🔍 Defeito escondido 3',()=>{const a=V1s();return a.length>=3&&a.every(c=>c.d<=10.2)},'Clipe longo demais aparado (máximo 10 s)']],
+ bonus:[],hints:['Dica: olhe a linha do tempo. Há um espaço vazio entre dois clipes.','Dica: dois clipes iguais aparecem em seguida. Um deles está sobrando.','Dica: o clipe da floresta passa de 10 segundos, e o pedido é no máximo 10 s por clipe.']},
+{e:'🧩',t:'Fluxo de trabalho',who:'Minijogo',kind:'o',full:false,
+ say:'Ordene as etapas de um vídeo, da primeira à última. Arraste os cartões na linha do tempo. Cada tentativa errada vale menos estrelas!',
+ load:()=>[mk('gw4','V1',0,5),mk('gw2','V1',5,5),mk('gw5','V1',10,5),mk('gw1','V1',15,5),mk('gw3','V1',20,5)],
+ req:[['Etapas na ordem certa, sem sobreposição',()=>srcs()==='gw1gw2gw3gw4gw5'&&noOver(V1s())]],bonus:[],
+ hints:['A primeira etapa acontece antes de abrir qualquer programa: é fora do computador.','Você só ajusta cor e som depois de montar e cortar.']}];
+const RK=[['Estagiário','🎞',0],['Assistente','🎬',4],['Editor','🎥',10],['Editor-chefe','🏆',18]];
+
+/* ---------- estado do jogo ---------- */
+let cur=null,curIdx=-1,hintsUsed=0,att=0,GP=false,FS=null;
+setInterval(()=>{if(timer)GP=true},300);
+const unlocked=i=>i===0||(i<=5?G.s[i-1]>0:G.s[0]>0);
+const rank=()=>{const tot=G.s.reduce((a,b)=>a+b,0);let r=RK[0];RK.forEach(x=>{if(tot>=x[2])r=x});return{tot,r,nx:RK.find(x=>x[2]>tot)}};
+const star=n=>'★'.repeat(n)+'☆'.repeat(3-n);
+
+/* ---------- código de resultado ---------- */
+const clean=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^A-Za-z0-9]/g,'').toUpperCase().slice(0,12);
+const chk=s=>{let n=0;for(const c of s)n=(n*31+c.charCodeAt(0))%1296;return n.toString(36).toUpperCase().padStart(2,'0')};
+const mkCode=()=>{const nm=clean(G.name)||'ALUNO',a=G.s.slice(0,6).join(''),b=G.s.slice(6).join('');return nm+'-'+a+'-'+b+'-'+chk(nm+a+b)};
+function readCode(c){
+ const p=(c||'').trim().toUpperCase().split('-');
+ if(p.length!==4||!/^\d{6}$/.test(p[1])||!/^\d{2}$/.test(p[2]))return'Código inválido: confira se foi copiado inteiro.';
+ if(chk(p[0]+p[1]+p[2])!==p[3])return'Código inválido: o final não confere (digitado errado ou alterado).';
+ const d=(p[1]+p[2]).split('').map(Number),tot=d.reduce((a,b)=>a+b,0);let r=RK[0];RK.forEach(x=>{if(tot>=x[2])r=x});
+ return'✔ '+p[0]+': pedidos '+d.slice(0,6).join(' ')+' · minijogos '+d.slice(6).join(' ')+' · '+tot+' de 24 estrelas · '+r[1]+' '+r[0]}
+
+/* ---------- menu do jogo ---------- */
+const hub=document.createElement('div');hub.id='gm';hub.setAttribute('role','dialog');hub.setAttribute('aria-label','Jogo TV da Escola');
+document.body.appendChild(hub);
+function drawHub(){
+ const {tot,r,nx}=rank(),pct=nx?(tot-r[2])/(nx[2]-r[2])*100:100;
+ const cd=i=>{const g=GAMES[i],s=G.s[i],lk=!unlocked(i);
+  return'<div class="mi '+(lk?'lk':'')+'"><b>'+g.e+' '+g.t+'</b><small>'+(g.kind==='m'?g.who+(g.full?' · Modo completo':''):'Minijogo')+'</small><span class="stars" aria-label="'+s+' de 3 estrelas">'+star(s)+'</span>'+
+   (lk?'<small>🔒 Termine o pedido anterior</small>':'<button class="on" data-go="'+i+'">'+(s?'Jogar de novo':'Jogar')+'</button>')+'</div>'};
+ hub.innerHTML='<div class="gc"><div class="gtop"><div><h2>📺 TV da Escola</h2><small class="mu">Você é o editor. Cada pedido é um cliente esperando.</small></div><button id="gx">Fechar</button></div>'+
+  '<div class="rk"><span class="big">'+r[1]+'</span><div><b>'+r[0]+'</b><br><small class="mu">'+tot+' de 24 estrelas</small></div><div class="bar2"><div><i style="width:'+pct+'%"></i></div><small class="mu">'+(nx?'Próximo cargo: '+nx[1]+' '+nx[0]+' com '+nx[2]+' estrelas':'Cargo máximo!')+'</small></div></div>'+
+  '<h3>Pedidos</h3><div class="mg">'+[0,1,2,3,4,5].map(cd).join('')+'</div><small class="mu">Os pedidos 4 a 6 usam o Modo completo (o jogo troca sozinho).</small>'+
+  '<h3>Minijogos</h3><div class="mg">'+cd(6)+cd(7)+'</div>'+
+  '<h3>Seu código de resultado</h3><div class="mb2"><label>Seu nome <input id="gnm" maxlength="30" value="'+(G.name||'').replace(/"/g,'')+'" placeholder="Ex.: Ana"></label></div>'+
+  '<div class="gcode" style="margin-top:6px"><input id="gcode" readonly value="'+mkCode()+'" aria-label="Código de resultado"><button id="gcp">Copiar</button></div><small class="mu">Mostre ou envie este código ao professor.</small>'+
+  '<h3>Para o professor: conferir código</h3><div class="gcode"><input id="gchk" placeholder="Cole o código do aluno"><button id="gcb">Conferir</button></div><div id="gres" style="margin-top:6px"></div></div>'}
+function openHub(){drawHub();hub.style.display='flex'}
+const closeHub=()=>hub.style.display='none';
+hub.addEventListener('click',e=>{
+ if(e.target===hub||e.target.id==='gx'){closeHub();return}
+ const go=e.target.closest('[data-go]');if(go){start(+go.dataset.go);return}
+ if(e.target.id==='gcp'){const i=$('#gcode');try{navigator.clipboard.writeText(i.value).then(()=>toast('✔ Código copiado.'))}catch(x){}i.select();return}
+ if(e.target.id==='gcb')$('#gres').textContent=readCode($('#gchk').value)});
+hub.addEventListener('input',e=>{if(e.target.id==='gnm'){G.name=e.target.value;save();$('#gcode').value=mkCode()}});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeHub()});
+const bg=document.createElement('button');bg.id='bgame';bg.className='on';bg.textContent='🎮 Jogar';
+$('#blost').after(bg);bg.onclick=openHub;
+TIPS.bgame=['Jogar','Abre o jogo TV da Escola: pedidos de clientes, minijogos, estrelas e cargos.'];
+
+/* ---------- cartão do pedido ---------- */
+const mc=document.createElement('div');mc.id='mc';mc.setAttribute('role','dialog');mc.setAttribute('aria-label','Pedido atual');document.body.appendChild(mc);
+function evalG(){const g=cur;return{r:g.req.map(x=>{try{return!!x[1]()}catch(e){return false}}),b:g.bonus.map(x=>{try{return!!x[1]()}catch(e){return false}})}}
+let sig='';
+function drawCard(force){
+ if(!cur)return;
+ const g=cur,v=evalG(),s=v.r.join('')+v.b.join('')+'|'+hintsUsed+'|'+att;
+ if(!force&&s===sig)return;sig=s;
+ const li=(x,i,ok,cls)=>'<li class="'+cls+(ok?' ok':'')+'">'+(g.kind==='h'&&ok?x[2]:x[0])+'</li>';
+ const fb=$('#mcf')?$('#mcf').textContent:'';
+ mc.innerHTML='<div class="mh"><b>'+g.e+' '+g.t+'</b><button id="mmn" aria-label="Minimizar">−</button></div><div class="mb">'+
+  '<div class="say">'+(g.kind==='m'?'<b>'+g.who+':</b> ':'')+'“'+g.say+'”</div>'+
+  '<b>'+(g.kind==='h'?'Defeitos ('+v.r.filter(Boolean).length+' de '+g.req.length+')':'O que entregar')+'</b><ul>'+g.req.map((x,i)=>li(x,i,v.r[i],'')).join('')+'</ul>'+
+  (g.bonus.length?'<b>Bônus (estrelas extras)</b><ul>'+g.bonus.map((x,i)=>li(x,i,v.b[i],'bn')).join('')+'</ul>':'')+
+  (g.kind==='o'&&att?'<small class="mu">Tentativas erradas: '+att+'</small>':'')+
+  '<div id="mcf">'+fb+'</div><div class="btns"><button class="on" id="mdl">Entregar</button><button id="mhn">💡 Dica ('+hintsUsed+'/'+g.hints.length+')</button><button id="mmu">Menu</button><button id="mex">Sair</button></div></div>'}
+function deliver(){
+ const g=cur,v=evalG(),ok=v.r.every(Boolean);
+ if(!ok){
+  let m;
+  if(g.kind==='o'){att++;const a=V1s();const right=a.filter((c,j)=>c.src==='gw'+(j+1)).length;m=(a.length===5?right:0)+' de 5 etapas estão no lugar certo. Tente de novo!'}
+  else if(g.kind==='h')m='Ainda há defeitos escondidos. Olhe a linha do tempo com calma.';
+  else m='Ainda falta: '+g.req.filter((x,i)=>!v.r[i]).map(x=>x[0].replace(/\.$/,'')).join('; ')+'.';
+  sig='';drawCard(true);$('#mcf').textContent=m;return}
+ let n;
+ if(g.kind==='m')n=1+Math.min(2,v.b.filter(Boolean).length);
+ else if(g.kind==='h')n=3-Math.min(2,hintsUsed);
+ else n=att===0?3:att===1?2:1;
+ const prev=G.s[curIdx];G.s[curIdx]=Math.max(prev,n);save();
+ const r0=rank();
+ const nxt=curIdx<5&&unlocked(curIdx+1)?curIdx+1:-1;
+ const msg=n===3?'Perfeito! O cliente adorou.':n===2?'Muito bom! Dá para ganhar a terceira estrela com os bônus.':'Entregue! Tente de novo para ganhar mais estrelas.';
+ mc.innerHTML='<div class="mh"><b>'+g.e+' '+g.t+'</b></div><div class="mb res"><div class="stars" aria-label="'+n+' de 3 estrelas">'+star(n)+'</div><p><b>'+msg+'</b></p><p class="mu">Cargo: '+r0.r[1]+' '+r0.r[0]+' · '+r0.tot+' de 24 estrelas</p><div class="btns" style="justify-content:center">'+
+  (nxt>=0?'<button class="on" data-nx="'+nxt+'">Próximo pedido ▶</button>':'')+'<button id="mrt">Refazer</button><button id="mmu">Menu</button><button id="mex">Sair</button></div></div>';
+ ding();party()}
+mc.addEventListener('click',e=>{
+ const id=e.target.id;
+ if(id==='mmn')mc.classList.toggle('min');
+ else if(id==='mdl')deliver();
+ else if(id==='mhn'){if(hintsUsed<cur.hints.length){hintsUsed++;sig='';drawCard(true);$('#mcf').textContent=cur.hints[hintsUsed-1]}else $('#mcf').textContent='Sem mais dicas.'}
+ else if(id==='mmu')openHub();
+ else if(id==='mex')endGame();
+ else if(id==='mrt')start(curIdx);
+ else if(e.target.dataset&&e.target.dataset.nx)start(+e.target.dataset.nx)});
+setInterval(()=>{if(cur&&mc.style.display==='block'&&!$('#mc .res'))drawCard()},500);
+
+/* ---------- iniciar / encerrar ---------- */
+function mergeFlags(){if(FS){Object.keys(FS).forEach(k=>{if(FS[k])F[k]=FS[k]});FS=null}}
+function endGame(){
+ mergeFlags();cur=null;curIdx=-1;showGW=false;renderBin();
+ document.body.classList.remove('gaming');mc.style.display='none';mc.classList.remove('min')}
+async function start(i){
+ const g=GAMES[i];if(!g||!unlocked(i))return;
+ if(items.length&&!confirm('Começar substitui a linha do tempo atual (dá para desfazer com Ctrl+Z). Continuar?'))return;
+ closeHub();mergeFlags();
+ FS={...F};Object.keys(F).forEach(k=>delete F[k]);
+ if(beg()===!!g.full){lastP=0;push();items=[];sel=null;fxSel=-1;render();$('#bmode').click();await wait(150)}
+ showGW=(g.kind==='o');renderBin();
+ lastP=0;push();items=g.load();sel=null;fxSel=-1;t=0;chA=null;
+ if(typeof chPane==='function')chPane();
+ render();pos();tab('pj');setTool('v');
+ cur=g;curIdx=i;hintsUsed=0;att=0;GP=false;sig='';
+ document.body.classList.add('gaming');mc.classList.remove('min');mc.style.display='block';drawCard(true)}
+
+window.GAME={start,openHub,GAMES,evalG,deliver,readCode,mkCode,G:()=>G,cur:()=>cur};
+})();
 </script></body></html>
