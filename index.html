@@ -946,4 +946,455 @@ tour=function(on){
  if(on&&document.body.classList.contains('beg'))STEPS.splice(0,STEPS.length,...MINI2);
  return t0(on)};
 })();
+</script><!-- RODADAS 5 + 6 · MODO INICIANTE MAIS SIMPLES E ACESSÍVEL
+     Substitui o bloco "Rodada 5" anterior. Cole DEPOIS do bloco da Rodada 4 e ANTES de </body>.
+     Para desfazer, apague este bloco inteiro. -->
+<style>
+/* ===== Rodada 5: cabeçalho, passo a passo, painel ===== */
+.bar>.mu{display:none}
+.brand{flex:1}
+#bexp{white-space:nowrap}
+#mw{position:relative;margin-left:auto}
+#mm{position:absolute;right:0;top:100%;margin-top:4px;background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:8px;display:none;flex-direction:column;gap:6px;z-index:60;min-width:230px;box-shadow:0 8px 24px #0006}
+#mm.open{display:flex}
+#mm>button{text-align:left;width:100%}
+#mm .mr{display:flex;gap:8px;align-items:center}
+#bt{display:none;padding:6px 10px;font-weight:600;border-bottom:1px solid var(--bd)}
+#stp{display:none;align-items:center;gap:6px;flex-wrap:wrap}
+#stp i{font-style:normal;padding:2px 8px;border-radius:12px;background:var(--pn);border:1px solid var(--bd);color:var(--mu)}
+#stp i.done{color:var(--ok);border-color:var(--ok)}
+#stp i.done:before{content:"✓ "}
+#stp i.cur{color:#fff;background:var(--ac);border-color:var(--ac)}
+#stn{flex-basis:100%;color:var(--tx);font-weight:600}
+#empty button{pointer-events:auto;margin-top:6px}
+@keyframes nd{50%{box-shadow:0 0 0 6px #ffd23faa}}
+.nudge,.pt{animation:nd 1s infinite;outline:2px solid #ffd23f;outline-offset:1px}
+@media (prefers-reduced-motion:reduce){.nudge,.pt{animation:none}}
+.beg #stp{display:flex}
+.beg #bt{display:block}
+.beg #bin>.ph{display:none}
+.beg #rc,.beg .tlh label,.beg #bhint,.beg .lh{display:none}
+.beg #hbt small:nth-of-type(2){display:none}
+.beg .pf .hint:not(#msg){display:none}
+.beg #mtxt.cap small{display:none}
+
+/* ===== Rodada 6: iniciantes ===== */
+.beg{--mu:#b4b4b4}
+.beg .clip.sel{outline:2px solid #fff;outline-offset:1px}
+.clip:focus-visible{outline:3px solid #ffd23f;outline-offset:1px}
+.beg #bc{display:none}
+.beg #bs{display:flex}
+.beg.emp #bv,.beg.emp #bs,.beg.emp #bd,.beg.emp #br{display:none}
+.beg.one #br{display:none}
+.dis{opacity:.45}
+#cp{position:absolute;width:0;border-left:2px dashed #ffd23f;pointer-events:none;z-index:6;display:none}
+#gz{position:absolute;display:none;border:2px dashed #fff9;border-radius:3px;background:repeating-linear-gradient(45deg,#ffffff22 0 6px,#ffffff0d 6px 12px);pointer-events:none}
+#gz span{position:absolute;left:4px;top:-18px;font-size:11px;color:#fff;background:#000c;padding:0 6px;border-radius:3px;white-space:nowrap}
+#cb{display:none;gap:6px;align-items:center}
+#hbm{display:none}.beg #hbm{display:inline-block}
+.beg #hb:not(.more) #hbt small{display:none}
+#blost{background:#7a4b00;border-color:#d99a2b;color:#fff}
+#lost{position:fixed;top:44px;left:12px;z-index:88;width:min(340px,calc(100vw - 24px));background:var(--pn);border:1px solid #d99a2b;border-radius:10px;padding:12px 14px;box-shadow:0 8px 30px #0008;display:none}
+#lost ul{list-style:none;margin:8px 0;padding:0}#lost li{padding:2px 0;color:var(--mu)}#lost li.ok{color:var(--ok)}
+#lost li:before{content:"○ "}#lost li.ok:before{content:"✓ "}
+#lost p{margin:8px 0}
+#gh{position:fixed;left:0;top:0;z-index:140;pointer-events:none;display:none}
+#gh svg{filter:drop-shadow(0 2px 3px #000a);transition:transform .15s}
+#gh.ck svg{transform:scale(.75)}
+#dl{position:fixed;inset:0;z-index:130;display:none;cursor:progress}
+#dcap{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:141;display:none;background:var(--pn);border:1px solid #ffd23f;border-radius:10px;padding:10px 14px;max-width:min(520px,calc(100vw - 24px));text-align:center}
+#dcap button{margin-left:8px}
+#ls{position:fixed;right:12px;top:48px;z-index:89;width:min(330px,calc(100vw - 24px));max-height:75vh;overflow:auto;background:var(--pn);border:1px solid var(--ac);border-radius:10px;padding:12px 14px;box-shadow:0 8px 30px #0008;display:none}
+#ls .lt{display:flex;gap:6px;margin:8px 0}#ls .lt button.on{background:var(--ac);color:#fff}
+#ls ol{list-style:none;margin:8px 0 0;padding:0}
+#ls li{display:flex;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--bd)}
+#ls li .lx{flex:1}#ls li.ok{color:var(--ok)}
+#ls li:before{content:"○";color:var(--mu)}#ls li.ok:before{content:"✓";color:var(--ok)}
+#ls .lsh{padding:1px 8px;font-size:11px}
+#cola{position:fixed;inset:0;z-index:150;background:#fff;color:#111;overflow:auto;padding:20px;display:none;font-size:15px}
+#cola h2{margin:0 0 4px;font-size:22px}#cola table{border-collapse:collapse;width:100%;margin:10px 0}
+#cola td,#cola th{border:1px solid #999;padding:6px 8px;text-align:left}#cola th{background:#eee}
+#cola kbd{background:#eee;border:1px solid #999;border-radius:3px;padding:0 5px}
+#cola button{color:#111;background:#eee;border-color:#999}
+.proj{--mu:#d0d0d0;--bd:#6a6a6a}
+.proj .tbar{width:84px}.proj .tbar small{font-size:calc(12px*var(--k))}
+.proj #ph{width:3px}.proj #rc,.proj .pf .hint{display:none}
+.proj button{padding:6px 12px}
+@media (pointer:coarse){#cb button,#blost,#ls .lsh,#hbm{min-height:38px}}
+@media print{body>*:not(#cola){display:none!important}#cola{position:static!important;display:block!important;overflow:visible!important}#cola .nopr{display:none!important}}
+</style>
+<script>
+(function(){
+const beg=()=>document.body.classList.contains('beg');
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+const RM=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const inside=()=>items.some(i=>t>i.s+.1&&t<i.s+i.d-.1);
+const vclips=()=>items.filter(i=>src(i).t==='v'&&src(i).k!=='t');
+const ST=window.__st={d1:0,d2:0};
+let PLAYED=false,DEMO=null,QUIET=0,LAST=Date.now();
+function pointOut(q,ms){const e=$(q);if(!e)return;e.classList.add('pt');setTimeout(()=>e.classList.remove('pt'),ms||3500)}
+
+/* ---------- Rodada 5: cabeçalho enxuto ---------- */
+$('#btour').textContent='❓ Como usar';
+const mw=document.createElement('div');mw.id='mw';
+const mb=document.createElement('button');mb.id='bmore';mb.textContent='⋯ Mais';
+const mm=document.createElement('div');mm.id='mm';
+const sr=document.createElement('div');sr.className='mr';
+const sl=document.createElement('span');sl.textContent='Sons de conclusão';
+sr.append($('#bsnd'),sl);
+mm.append($('#bmode'),$('#bhelp'),sr,$('#bgl'),$('#bfs'),$('#brec'));
+mw.append(mb,mm);$('#bexp').before(mw);
+mb.onclick=()=>mm.classList.toggle('open');
+document.addEventListener('pointerdown',e=>{if(!e.target.closest('#mw'))mm.classList.remove('open')});
+mm.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&b.id!=='bsnd'&&b.id!=='bfs')mm.classList.remove('open')});
+TIPS.bmore=['Mais opções','Modo iniciante/completo, atalhos, sons, glossário, tamanho do texto, roteiro da aula, cartaz de cola e modo projetor.'];
+const bt=document.createElement('div');bt.id='bt';bt.textContent='Seus clipes';
+$('#bin>.ph').after(bt);
+$('#imp').textContent='📁 Usar meus arquivos';
+$('#empty').innerHTML='<b>Linha do tempo vazia</b><br>Clique em <b>＋ Adicionar</b> em um clipe da lista à esquerda.<br><button id="bex2">📂 Ou abra um exemplo pronto</button>';
+$('#bex2').onclick=()=>$('#bex').click();
+
+/* ---------- Rodada 5: passo a passo ---------- */
+const stp=document.createElement('span');stp.id='stp';
+stp.innerHTML='<b>Passo a passo:</b> <i>1 Adicionar</i> › <i>2 Reproduzir</i> › <i>3 Cortar</i> › <i>4 Exportar</i><span id="stn"></span>';
+$('.tlh').appendChild(stp);
+$('#play').addEventListener('click',()=>{if(items.length)ST.d2=1});
+const MSG=['Clique em ＋ Adicionar em um clipe da lista.','Clique em ▶ para reproduzir.','Leve a linha azul para dentro de um clipe (clique na régua) e clique em ✂ Cortar aqui.','Clique em Exportar vídeo.'];
+function step5(){
+ document.querySelectorAll('.nudge').forEach(x=>x.classList.remove('nudge'));
+ if(!beg())return;
+ if(items.length)ST.d1=1;if(timer)ST.d2=1;
+ const d=[ST.d1,ST.d2,!!F.cut,!!F.exp],c=d.findIndex(x=>!x);
+ document.querySelectorAll('#stp i').forEach((e,i)=>{e.className=d[i]?'done':i===c?'cur':''});
+ $('#stn').textContent=c<0?'🎉 Você completou os 4 passos! Abra ⋯ Mais ▸ Roteiro da aula para continuar.':MSG[c];
+ if(ts>=0||DEMO)return;
+ const tg=c===0?document.querySelectorAll('#binl .ad'):c===1?[$('#play')]:c===2?[inside()?$('#bs'):$('#ruler')]:c===3?[$('#bexp')]:[];
+ tg.forEach(x=>x&&x.classList.add('nudge'))}
+setInterval(step5,500);
+
+/* ---------- mini-tour (5 passos com ação) ---------- */
+const MINI2=[
+ {t:'Bem-vindo! 🎬',p:'Editar vídeo é juntar pedaços (clipes) em uma linha do tempo. Vamos fazer 5 passos rápidos. Se travar, o botão "Mostre-me" faz o passo na tela para você ver.',b:'Vamos lá'},
+ {s:'#binl',t:'1. Adicione um clipe',p:'Clique em ＋ Adicionar ao lado de um clipe da lista. Ele vai para a linha do tempo.',demo:'add',go:()=>{tab('pj');return{n:items.length}},ok:b=>items.length>b.n},
+ {s:'#play',t:'2. Reproduza',p:'Clique em ▶ para ver o resultado no monitor.',demo:'play',go:()=>{need();return{t}},ok:b=>timer||t!==b.t},
+ {s:'#ruler',t:'3. Mova a linha azul',p:'Clique na régua de tempo (a faixa com números) para levar a linha azul para dentro do clipe. É ali que o corte vai acontecer.',demo:'line',go:()=>{need();t=0;pos()},ok:()=>inside()},
+ {s:'#bs',t:'4. Corte aqui',p:'Clique em ✂ Cortar aqui. O clipe vira dois pedaços, e nada é apagado.',h:'Para mover os pedaços depois, é só arrastá-los.',demo:'cut',go:()=>{need();return{n:items.length}},ok:b=>items.length>b.n},
+ {s:'#bexp',t:'5. Exporte',p:'Quando terminar, clique em Exportar vídeo para gerar o arquivo. Por enquanto, só saiba onde fica.',demo:'export',b:'Entendi'},
+ {t:'Pronto! 🏆',p:'Você já sabe o básico. Passe o mouse (ou toque) nos botões para ver a função de cada um. Em ⋯ Mais estão o Roteiro da aula, o glossário, os atalhos e o tamanho do texto. Se ficar perdido, use 🆘 Estou perdido.',b:'Concluir'}];
+const t0=tour;
+tour=function(on){
+ if(on&&beg())STEPS.splice(0,STEPS.length,...MINI2);
+ return t0(on)};
+
+/* ---------- Rodada 6: botão "Cortar aqui" (uma forma só de cortar) ---------- */
+const O={bd:TIPS.bd[1],br:TIPS.br[1],bs:TIPS.bs[1]};
+TIPS.bs[0]='Cortar na linha azul';
+$('#bs').onclick=()=>{
+ const under=i=>t>i.s+.1&&t<i.s+i.d-.1,cur=items.find(i=>i.id===sel),it=(cur&&under(cur))?cur:items.find(under);
+ if(!it){
+  if(!items.length)toast('Adicione um clipe primeiro: clique em ＋ Adicionar na lista.');
+  else{toast('Leve a linha azul para dentro de um clipe: clique na régua de tempo, no ponto do corte.');pointOut('#ruler')}
+  return}
+ cut(it,t)};
+
+/* ---------- Rodada 6: prévia do corte (Lâmina) ---------- */
+const cp=document.createElement('div');cp.id='cp';$('#inner').appendChild(cp);
+$('#inner').addEventListener('pointermove',e=>{
+ if(tool!=='c'||e.pointerType==='touch'||DEMO){cp.style.display='none';return}
+ const c=e.target.closest('.clip');if(!c){cp.style.display='none';return}
+ const ln=c.parentElement;cp.style.display='block';cp.style.left=tx(e)*pps+'px';cp.style.top=ln.offsetTop+'px';cp.style.height=ln.offsetHeight+'px'});
+$('#inner').addEventListener('pointerleave',()=>cp.style.display='none');
+
+/* ---------- Rodada 6: "fantasma" ao aparar + detecção de mover ---------- */
+const gz=document.createElement('div');gz.id='gz';gz.innerHTML='<span>Arquivo original inteiro: nada foi apagado</span>';
+$('#ruler').after(gz);
+let GD=null,gzT=0;
+$('#inner').addEventListener('pointerdown',e=>{
+ const c=e.target.closest&&e.target.closest('.clip');if(!c||tool==='c')return;
+ const it=items.find(i=>i.id==c.dataset.id);if(!it||TS[it.tr].l)return;
+ GD={id:it.id,h:e.target.classList.contains('hl')||e.target.classList.contains('hr'),s:it.s,d:it.d,i:it.i,tr:it.tr}},true);
+addEventListener('pointermove',()=>{
+ if(!GD||!GD.h)return;
+ const it=items.find(i=>i.id===GD.id);if(!it)return;
+ const s=src(it);if(s.k==='i'||s.k==='t')return;
+ const l=Math.max(0,(it.s-it.i)*pps),w=Math.max(0,(it.s-it.i+s.d)*pps-l),ln=$('#lane'+it.tr);
+ clearTimeout(gzT);Object.assign(gz.style,{display:'block',left:l+'px',width:w+'px',top:ln.offsetTop+2+'px',height:ln.offsetHeight-4+'px'})});
+addEventListener('pointerup',()=>{
+ if(!GD)return;const g=GD;GD=null;
+ const it=items.find(i=>i.id===g.id);
+ if(it&&g.h&&(Math.abs(it.d-g.d)>.05||Math.abs(it.i-g.i)>.05))toast('✔ Ponta aparada. O arquivo original continua inteiro: dá para esticar de novo.');
+ if(it&&!g.h&&(Math.abs(it.s-g.s)>.05||it.tr!==g.tr)){F.moved=true;toast('✔ Clipe movido. Ctrl+Z desfaz.')}
+ gzT=setTimeout(()=>gz.style.display='none',1600)});
+
+/* ---------- Rodada 6: confirmações e comemoração só depois da ação do aluno ---------- */
+const a1=add;add=function(sid,trid,s){const n=items.length;a1(sid,trid,s);if(items.length>n)toast('✔ Clipe adicionado à linha do tempo. Ctrl+Z desfaz.')};
+const c1=cut;cut=function(it,x){const n=items.length;c1(it,x);if(items.length>n)toast('✔ Clipe cortado em dois. Nada foi apagado. Ctrl+Z desfaz.')};
+const quiet=()=>!!DEMO||Date.now()<QUIET;
+const p1=party,d1=ding,t1=toast;
+party=function(){if(!quiet())p1()};
+ding=function(){if(!quiet())d1()};
+toast=function(m){if(quiet()&&/Conquista/.test(m))return;t1(m)};
+$('#bex').addEventListener('click',()=>{QUIET=Date.now()+3000});
+ACH.forEach(a=>{const f=a[3];a[3]=()=>DEMO?false:f()});
+$('#toast').setAttribute('role','status');$('#toast').setAttribute('aria-live','polite');
+$('#hbt').setAttribute('role','status');
+
+/* ---------- Rodada 6: termos simples nas dicas do modo iniciante ---------- */
+const SMP=[[/\bno playhead\b/g,'na linha azul'],[/\bdo playhead\b/g,'da linha azul'],[/\bao playhead\b/g,'à linha azul'],[/\bo playhead\b/gi,'a linha azul'],[/\bplayhead\b/gi,'linha azul'],[/\bTrilhas\b/g,'Camadas'],[/\btrilhas\b/g,'camadas'],[/\bTrilha\b/g,'Camada'],[/\btrilha\b/g,'camada']];
+const simple=s=>typeof s==='string'?SMP.reduce((a,[r,v])=>a.replace(r,v),s):s;
+const tf=tipFor;
+tipFor=function(el){const d=tf(el);return d&&beg()?d.map(simple):d};
+
+/* ---------- Rodada 6: mover com botões, "ver mais" na ajuda ---------- */
+const cb=document.createElement('span');cb.id='cb';
+cb.innerHTML='<b>Clipe selecionado:</b><button data-mv="-1">◀ Mais cedo</button><button data-mv="1">Mais tarde ▶</button>';
+const hbm=document.createElement('button');hbm.id='hbm';hbm.textContent='ver mais ▾';
+$('#bzero').before(cb,hbm);
+hbm.onclick=()=>{const m=$('#hb').classList.toggle('more');hbm.textContent=m?'ver menos ▴':'ver mais ▾'};
+cb.addEventListener('click',e=>{
+ const b=e.target.closest('[data-mv]'),it=items.find(i=>i.id===sel);if(!b||!it||TS[it.tr].l)return;
+ lastP=0;push();it.s=Math.max(0,it.s+.5*(+b.dataset.mv));F.moved=true;render()});
+TIPS.cb=['Mover clipe','Move o clipe selecionado em passos de meio segundo. Alternativa a arrastar.'];
+TIPS.hbm=['Ver mais','Mostra a explicação completa e a referência ao Premiere.'];
+
+/* ---------- Rodada 6: acessibilidade (teclado e leitor de tela) ---------- */
+function decorate(){
+ document.querySelectorAll('.clip[data-id]').forEach(c=>{
+  const it=items.find(i=>i.id==c.dataset.id);if(!it)return;
+  c.tabIndex=0;c.setAttribute('role','button');c.setAttribute('aria-pressed',it.id===sel?'true':'false');
+  c.setAttribute('aria-label',src(it).n+', camada '+it.tr+', começa em '+it.s.toFixed(1).replace('.',',')+' segundos, dura '+it.d.toFixed(1).replace('.',',')+' segundos'+(it.id===sel?', selecionado':'')+'. Enter seleciona, setas movem, Alt e setas aparam o fim.')});
+ document.querySelectorAll('.lane').forEach(l=>{l.setAttribute('role','group');l.setAttribute('aria-label','Camada '+l.dataset.tr)});
+ const N={l:'Travar camada',h:'Ocultar camada',m:'Silenciar camada'};
+ document.querySelectorAll('.th button').forEach(b=>b.setAttribute('aria-label',(N[b.dataset.a]||'')+' '+b.dataset.tr))}
+const r1=render;
+render=function(){
+ const a=document.activeElement,fid=a&&a.classList&&a.classList.contains('clip')?a.dataset.id:null;
+ r1();decorate();
+ if(fid){const e=document.querySelector('.clip[data-id="'+fid+'"]');if(e)e.focus({preventScroll:true})}};
+$('#inner').addEventListener('keydown',e=>{
+ const c=e.target.closest&&e.target.closest('.clip');if(!c)return;
+ const it=items.find(i=>i.id==c.dataset.id);if(!it)return;
+ const k=e.key;
+ if(k==='Delete'||k==='Backspace'){sel=it.id;return}
+ if(TS[it.tr].l)return;
+ if(k==='Enter'){e.preventDefault();sel=it.id;render();return}
+ if(k==='ArrowLeft'||k==='ArrowRight'){
+  e.preventDefault();lastP=0;push();const d=(k==='ArrowLeft'?-1:1)*(e.shiftKey?1:.1);
+  if(e.altKey){const sd=src(it);it.d=Math.max(.3,Math.min(it.d+d,sd.d-it.i));F.trim=true}
+  else{it.s=Math.max(0,it.s+d);F.moved=true}
+  sel=it.id;render();return}
+ if(k==='ArrowUp'||k==='ArrowDown'){
+  const ord=['V3','V2','V1'];if(src(it).t!=='v')return;
+  const j=ord.indexOf(it.tr)+(k==='ArrowUp'?-1:1);if(j<0||j>2||TS[ord[j]].l)return;
+  e.preventDefault();lastP=0;push();it.tr=ord[j];sel=it.id;render()}});
+
+/* ---------- Rodada 6: estado da tela (ferramentas que aparecem aos poucos) ---------- */
+const LD={};
+const LES=[
+ {n:'Aula 1 · Cortar e juntar',it:[
+  ['Adicione 3 clipes de vídeo à linha do tempo',()=>vclips().length>=3,'add'],
+  ['Reproduza e veja o resultado no monitor',()=>PLAYED,'play'],
+  ['Leve a linha azul para dentro de um clipe',()=>inside(),'line'],
+  ['Corte o clipe com ✂ Cortar aqui',()=>F.cut,'cut'],
+  ['Apare a ponta de um clipe (puxe a borda)',()=>F.trim,'trim'],
+  ['Mova um clipe arrastando',()=>F.moved,'move'],
+  ['Apague um clipe',()=>F.del,'delete'],
+  ['Apague e feche o buraco (ripple)',()=>F.rip,'ripple'],
+  ['Desfaça uma ação com Ctrl+Z',()=>F.undo,'undo'],
+  ['Exporte o vídeo',()=>F.exp,'export']]},
+ {n:'Aula 2 · Efeitos e animação (Modo completo)',it:[
+  ['Selecione um clipe e abra Controles de efeitos',()=>!!items.find(i=>i.id===sel)&&!$('#p-fx').hidden],
+  ['Mude a Escala (por exemplo, 150%)',()=>items.some(i=>chg(i,'sc'))],
+  ['Reduza a Opacidade de um clipe na V2',()=>items.some(i=>i.tr!=='V1'&&chg(i,'op'))],
+  ['Dê 1 segundo de Fade de entrada a um clipe',()=>items.some(i=>i.fx&&i.fx.fi>=1)],
+  ['Crie 2 quadros-chave de Escala (cronômetro ⏱)',()=>items.some(i=>i.kf&&i.kf.sc&&i.kf.sc.length>=2)],
+  ['Aplique preto e branco ou sépia',()=>items.some(i=>chg(i,'gs')||chg(i,'se'))],
+  ['Mude a velocidade de um clipe',()=>items.some(i=>chg(i,'sp'))],
+  ['Crie um título (texto)',()=>items.some(i=>src(i).k==='t')],
+  ['Dê um fade de saída ao áudio',()=>items.some(i=>i.tr==='A1'&&i.fx&&i.fx.fo>0)]]}];
+function lessons(){LES.forEach((L,a)=>L.it.forEach((x,i)=>{const k=a+'_'+i;if(!LD[k]){try{if(x[1]())LD[k]=1}catch(e){}}}))}
+let lsSig='',lsTab=0,lsOpen=false;
+function drawLes(force){
+ const L=LES[lsTab],sig=lsTab+'|'+L.it.map((x,i)=>LD[lsTab+'_'+i]?1:0).join('');
+ if(!force&&sig===lsSig)return;lsSig=sig;
+ const n=L.it.filter((x,i)=>LD[lsTab+'_'+i]).length;
+ $('#lsb').innerHTML='<div class="lt">'+LES.map((x,i)=>'<button data-lt="'+i+'" class="'+(i===lsTab?'on':'')+'">Aula '+(i+1)+'</button>').join('')+'</div><b>'+L.n+'</b> · '+n+' de '+L.it.length+
+  '<div class="xp"><div style="width:'+n/L.it.length*100+'%"></div></div><ol>'+L.it.map((x,i)=>'<li class="'+(LD[lsTab+'_'+i]?'ok':'')+'"><span class="lx">'+x[0]+'</span>'+(x[2]?'<button class="lsh" data-d="'+x[2]+'">Mostre-me</button>':'')+'</li>').join('')+'</ol>'}
+function sync6(){
+ const b=document.body,B=beg();
+ b.classList.toggle('emp',!items.length);b.classList.toggle('one',items.length<2);
+ if(timer)PLAYED=true;
+ const sm=document.querySelector('#bs small');if(sm){const w=B?'Cortar aqui':'Dividir';if(sm.textContent!==w)sm.textContent=w}
+ const it=items.find(i=>i.id===sel),un=items.some(i=>t>i.s+.1&&t<i.s+i.d-.1);
+ $('#bd').classList.toggle('dis',!it);$('#br').classList.toggle('dis',!it);$('#bs').classList.toggle('dis',!un);
+ const pre=it?'':'Primeiro clique num clipe para selecioná-lo (ferramenta Selecionar). ';
+ TIPS.bd[1]=pre+O.bd;TIPS.br[1]=pre+O.br;
+ TIPS.bs[1]=(un?'':'Leve a linha azul para dentro de um clipe (clique na régua) antes de cortar. ')+'Corta o clipe exatamente onde está a linha azul. Nada é apagado.'+(O.bs.includes('Premiere')?' No Premiere: Adicionar edição (Ctrl+K).':'');
+ cb.style.display=(it&&!TS[it.tr].l)?'inline-flex':'none';
+ if(!DEMO)lessons();if(lsOpen)drawLes()}
+setInterval(sync6,300);
+
+/* ---------- Rodada 6: demonstração animada ("Mostre-me") ---------- */
+const gh=document.createElement('div');gh.id='gh';
+gh.innerHTML='<svg viewBox="0 0 24 24" width="30" height="30" aria-hidden="true"><path d="M5 3l14 9-6 1.5 3.5 6.5-2.8 1.5-3.5-6.5L5 18z" fill="#fff" stroke="#000" stroke-width="1.2"/></svg>';
+const dl=document.createElement('div');dl.id='dl';
+const dc=document.createElement('div');dc.id='dcap';dc.setAttribute('role','status');
+document.body.append(gh,dl,dc);
+const stopDemo=()=>{if(DEMO)DEMO.stop=true};
+dl.onclick=stopDemo;
+addEventListener('keydown',e=>{if(DEMO&&e.key==='Escape'){e.stopPropagation();stopDemo()}},true);
+const chk=()=>{if(DEMO.stop)throw 0};
+async function mv(x,y,ms){
+ chk();gh.style.transition=RM?'none':'transform '+(ms||650)+'ms ease';gh.style.transform='translate('+x+'px,'+y+'px)';
+ await wait(RM?60:(ms||650)+80);chk()}
+const ctr=e=>{const r=e.getBoundingClientRect();return[r.left+r.width/2,r.top+r.height/2]};
+async function clk(el){
+ await mv(...ctr(el));gh.classList.add('ck');setTimeout(()=>gh.classList.remove('ck'),300);
+ el.click();await wait(450)}
+const PO={bubbles:true,pointerId:1,pointerType:'mouse',isPrimary:true,button:0};
+async function drag(el,x0,y0,x1,y1){
+ await mv(x0,y0);
+ el.dispatchEvent(new PointerEvent('pointerdown',{...PO,clientX:x0,clientY:y0}));
+ const N=RM?2:24;
+ for(let k=1;k<=N;k++){
+  const x=x0+(x1-x0)*k/N,y=y0+(y1-y0)*k/N;
+  gh.style.transition='none';gh.style.transform='translate('+x+'px,'+y+'px)';
+  window.dispatchEvent(new PointerEvent('pointermove',{...PO,clientX:x,clientY:y}));
+  await wait(32);
+  if(DEMO.stop){window.dispatchEvent(new PointerEvent('pointerup',{...PO,clientX:x,clientY:y}));throw 0}}
+ window.dispatchEvent(new PointerEvent('pointerup',{...PO,clientX:x1,clientY:y1}));await wait(500)}
+const firstEl=()=>{const a=items.filter(i=>i.tr==='V1').sort((p,q)=>p.s-q.s)[0];return a&&document.querySelector('.clip[data-id="'+a.id+'"]')};
+async function demoAdd(){tab('pj');await wait(80);const a=document.querySelector('#binl .ad');if(a)await clk(a)}
+async function ensure(n){let g=0;while(vclips().length<n&&g++<4)await demoAdd();sync6()}
+async function selectEl(el){
+ const r=el.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2;await mv(x,y);
+ el.dispatchEvent(new PointerEvent('pointerdown',{...PO,clientX:x,clientY:y}));
+ window.dispatchEvent(new PointerEvent('pointerup',{...PO,clientX:x,clientY:y}));await wait(400)}
+const DM={
+ add:{cap:'Clique em ＋ Adicionar ao lado de um clipe da lista: ele vai para a linha do tempo.',run:async()=>{await demoAdd()}},
+ play:{cap:'Clique em ▶ para reproduzir. O monitor mostra o que está sob a linha azul.',run:async()=>{await ensure(1);await clk($('#play'));await wait(2200);if(timer)await clk($('#play'))}},
+ line:{cap:'Clique na régua de tempo para levar a linha azul para dentro do clipe.',run:async()=>{
+  await ensure(1);const el=firstEl(),r=el.getBoundingClientRect(),rr=$('#ruler').getBoundingClientRect(),x=r.left+r.width*.45,y=rr.top+rr.height/2;
+  await mv(x,y);$('#ruler').dispatchEvent(new PointerEvent('pointerdown',{...PO,clientX:x,clientY:y}));
+  window.dispatchEvent(new PointerEvent('pointerup',{...PO,clientX:x,clientY:y}));await wait(600)}},
+ cut:{cap:'Com a linha azul dentro do clipe, clique em ✂ Cortar aqui: o clipe vira dois pedaços.',run:async()=>{await ensure(1);if(!inside())await DM.line.run();await clk($('#bs'));await wait(700)}},
+ trim:{cap:'Puxe a ponta do clipe: ele encurta, mas o arquivo original continua inteiro.',run:async()=>{
+  await ensure(1);const el=firstEl(),r=el.getBoundingClientRect(),h=el.querySelector('.hr'),y=r.top+r.height/2,x0=r.right-3;
+  await drag(h,x0,y,x0-Math.min(r.width*.4,1.5*pps),y);await wait(900)}},
+ move:{cap:'Arraste o clipe para mudar a posição dele na linha do tempo.',run:async()=>{
+  await ensure(1);const el=firstEl(),r=el.getBoundingClientRect(),y=r.top+r.height/2,x0=r.left+r.width/2;
+  await drag(el,x0,y,x0+1.2*pps,y);await wait(700)}},
+ delete:{cap:'Clique no clipe para selecioná-lo e depois em Apagar. Ficará um buraco no lugar.',run:async()=>{
+  await ensure(2);await selectEl(firstEl());await clk($('#bd'));await wait(700)}},
+ ripple:{cap:'Selecione o clipe e use Apagar e fechar: os seguintes avançam e fecham o buraco.',run:async()=>{
+  await ensure(2);await selectEl(firstEl());sync6();await wait(350);await clk($('#br'));await wait(700)}},
+ undo:{cap:'Errou? Clique em ↶ Desfazer (ou Ctrl+Z) para voltar um passo.',run:async()=>{await ensure(1);await clk($('#bu'));await wait(600)}},
+ export:{cap:'Quando terminar, clique em Exportar vídeo. Aqui só vou mostrar onde fica.',run:async()=>{await mv(...ctr($('#bexp')));pointOut('#bexp',2200);await wait(1800)}}};
+async function runDemo(key){
+ const d=DM[key];if(!d||DEMO)return;
+ if(chA&&!chA.done){toast('Termine ou reinicie o desafio antes de usar o Mostre-me.');return}
+ const sn={j:ser(),t,sel,tool,H:H.slice(),R:R.slice(),UNC,F:{...F},st:{...ST},P:PLAYED};
+ DEMO={stop:false};lost.style.display='none';
+ gh.style.display='block';gh.style.transition='none';gh.style.transform='translate('+innerWidth/2+'px,'+innerHeight/2+'px)';
+ dl.style.display='block';
+ dc.style.display='block';dc.innerHTML='<b>👀 '+d.cap+'</b> <button id="dst">Parar (Esc)</button>';
+ $('#dst').onclick=stopDemo;
+ try{$('#sc').scrollLeft=0;await d.run();await wait(500)}catch(e){if(e!==0)console.error(e)}
+ DEMO.stop=true;if(timer)play();
+ ld(sn.j);t=sn.t;sel=sn.sel;H=sn.H;R=sn.R;UNC=sn.UNC;
+ Object.keys(F).forEach(k=>delete F[k]);Object.assign(F,sn.F);Object.assign(ST,sn.st);PLAYED=sn.P;
+ setTool(sn.tool);fxSel=-1;render();pos();
+ dc.innerHTML='<b>Agora é com você! 👉</b>';gh.style.display='none';dl.style.display='none';
+ DEMO=null;QUIET=Date.now()+1500;
+ setTimeout(()=>{if(!DEMO)dc.style.display='none'},1600);
+ const tg=({add:'#binl .ad',play:'#play',line:'#ruler',cut:'#bs',trim:'#laneV1',move:'#laneV1',delete:'#bd',ripple:'#br',undo:'#bu',export:'#bexp'})[key];
+ if(tg)pointOut(tg,3500)}
+
+/* mostrar o botão "Mostre-me" no cartão do tour */
+const sb=document.createElement('button');sb.id='tshow';sb.textContent='▶ Mostre-me';sb.style.display='none';
+$('#tskip').after(sb);
+sb.onclick=()=>runDemo(STEPS[ts]&&STEPS[ts].demo);
+const st1=step;
+step=function(n){
+ const s=STEPS[n];
+ if(s&&s.ok&&!s.__w){const f=s.ok;s.ok=b=>DEMO?false:f(b);s.__w=1}
+ st1(n);sb.style.display=s&&s.demo?'':'none'};
+TIPS.tshow=['Mostre-me','Faz o passo na tela para você ver como é. Depois a tela volta ao que estava, e é a sua vez.'];
+
+/* ---------- Rodada 6: "Estou perdido" e dicas por tempo parado ---------- */
+const bl=document.createElement('button');bl.id='blost';bl.textContent='🆘 Estou perdido';
+$('#btour').after(bl);
+const lost=document.createElement('div');lost.id='lost';lost.setAttribute('role','dialog');lost.setAttribute('aria-label','Ajuda');
+document.body.appendChild(lost);
+function NEXT(){
+ if(beg()){
+  const L=[['Adicionar um clipe',ST.d1],['Reproduzir',ST.d2],['Cortar',!!F.cut],['Exportar',!!F.exp]],c=L.findIndex(x=>!x[1]);
+  const M=[['Falta colocar um clipe na linha do tempo. Clique em ＋ Adicionar ao lado de um clipe da lista.','#binl .ad','add'],
+   ['Clique em ▶ para ver o resultado no monitor.','#play','play'],
+   inside()?['Clique em ✂ Cortar aqui para dividir o clipe na linha azul.','#bs','cut']:['Leve a linha azul para dentro de um clipe: clique na régua de tempo (a faixa com números).','#ruler','line'],
+   ['Clique em Exportar vídeo para gerar o arquivo.','#bexp','export']];
+  return{L,c,m:c<0?['Você completou os 4 passos! Abra ⋯ Mais ▸ Roteiro da aula para continuar praticando.']:M[c]}}
+ const it=LES[1].it,L=it.map((x,i)=>[x[0],!!LD['1_'+i]]),c=L.findIndex(x=>!x[1]);
+ return{L,c,m:c<0?['Aula 2 completa! Experimente os Desafios.']:['Próximo: '+it[c][0]+'.',null,it[c][2]]}}
+let lostT=0;
+function showLost(soft){
+ const n=NEXT(),m=n.m;
+ lost.innerHTML='<b>'+(soft?'Precisa de uma dica?':'Onde você está')+'</b><ul>'+n.L.map(x=>'<li class="'+(x[1]?'ok':'')+'">'+x[0]+'</li>').join('')+'</ul><p><b>Próximo:</b> '+m[0]+'</p>'+
+  (m[2]?'<button id="lsw" class="on">▶ Mostre-me</button> ':'')+'<button id="lcl">Fechar</button>';
+ lost.style.display='block';
+ if(m[1])pointOut(m[1],6000);
+ const lsw=$('#lsw');if(lsw)lsw.onclick=()=>runDemo(m[2]);
+ $('#lcl').onclick=()=>lost.style.display='none';
+ clearTimeout(lostT);if(soft)lostT=setTimeout(()=>lost.style.display='none',14000)}
+bl.onclick=()=>lost.style.display==='block'?lost.style.display='none':showLost(false);
+TIPS.blost=['Estou perdido','Mostra o que você já fez, qual é o próximo passo e destaca o botão certo.'];
+['pointerdown','keydown','wheel'].forEach(ev=>addEventListener(ev,()=>LAST=Date.now(),true));
+let lastHint=0;const hintN={};
+setInterval(()=>{
+ if(!beg()||ts>=0||DEMO||timer||lost.style.display==='block'||$('#ls').style.display==='block'||$('#cola').style.display==='block'||$('#hp').style.display==='flex')return;
+ if(Date.now()-LAST<25000||Date.now()-lastHint<90000)return;
+ const n=NEXT();if(n.c<0||(hintN[n.c]||0)>=2)return;
+ hintN[n.c]=(hintN[n.c]||0)+1;lastHint=Date.now();showLost(true)},2000);
+document.addEventListener('pointerdown',e=>{if(lost.style.display==='block'&&!e.target.closest('#lost,#blost'))lost.style.display='none'});
+
+/* ---------- Rodada 6: roteiro da aula ---------- */
+const ls=document.createElement('div');ls.id='ls';ls.setAttribute('role','dialog');ls.setAttribute('aria-label','Roteiro da aula');
+ls.innerHTML='<b>📋 Roteiro da aula</b> <button id="lsx" style="float:right">Fechar</button><div id="lsb"></div>';
+document.body.appendChild(ls);
+$('#lsx').onclick=()=>{ls.style.display='none';lsOpen=false};
+ls.addEventListener('click',e=>{
+ const t_=e.target.closest('[data-lt]');if(t_){lsTab=+t_.dataset.lt;drawLes(true);return}
+ const d=e.target.closest('[data-d]');if(d){ls.style.display='none';lsOpen=false;runDemo(d.dataset.d)}});
+
+/* ---------- Rodada 6: menu Mais (roteiro, cartaz, projetor) ---------- */
+const mk2=(id,txt,tip)=>{const b=document.createElement('button');b.id=id;b.textContent=txt;mm.append(b);TIPS[id]=tip;return b};
+const bls=mk2('bls','📋 Roteiro da aula',['Roteiro da aula','Lista de tarefas da aula, marcadas sozinhas conforme você faz. Cada item tem um Mostre-me.']);
+const bcola=mk2('bcola','🖨 Cartaz de cola',['Cartaz de cola','Abre uma folha com as ferramentas e atalhos para imprimir e deixar ao lado do computador.']);
+const bproj=mk2('bproj','🖥 Modo projetor',['Modo projetor','Aumenta texto e botões e realça a linha azul para a turma ver de longe.']);
+bls.onclick=()=>{lsTab=beg()?0:1;lsOpen=true;ls.style.display='block';drawLes(true)};
+let PJ=false,K0='1';
+bproj.onclick=()=>{
+ PJ=!PJ;document.body.classList.toggle('proj',PJ);const r=document.documentElement.style;
+ if(PJ){K0=r.getPropertyValue('--k')||'1';r.setProperty('--k','1.5')}else r.setProperty('--k',K0);
+ bproj.textContent=PJ?'🖥 Sair do modo projetor':'🖥 Modo projetor'};
+const cola=document.createElement('div');cola.id='cola';
+cola.innerHTML='<div class="nopr" style="text-align:right"><button id="cpr" class="on" style="color:#fff">🖨 Imprimir</button> <button id="ccl">Fechar</button></div>'+
+ '<h2>Cartaz de cola · Estúdio de Edição</h2><p>Pense na linha do tempo como <b>pedaços de fita colados em ordem</b>. Cortar, aparar e apagar só mexem na fita: o arquivo original nunca é apagado.</p>'+
+ '<table><tr><th>Ferramenta</th><th>O que faz</th><th>Atalho</th><th>No Premiere</th></tr>'+
+ '<tr><td>↶ Desfazer</td><td>Volta um passo. Pode errar à vontade.</td><td><kbd>Ctrl</kbd>+<kbd>Z</kbd></td><td>Ctrl+Z</td></tr>'+
+ '<tr><td>↖ Selecionar</td><td>Clique no clipe para escolher; arraste para mover; puxe a ponta para aparar.</td><td><kbd>V</kbd></td><td>Ferramenta de Seleção</td></tr>'+
+ '<tr><td>✂ Cortar aqui</td><td>Divide o clipe onde está a linha azul.</td><td><kbd>S</kbd></td><td>Adicionar edição (Ctrl+K)</td></tr>'+
+ '<tr><td>🗑 Apagar</td><td>Remove o clipe e deixa um buraco (tela preta).</td><td><kbd>Delete</kbd></td><td>Delete</td></tr>'+
+ '<tr><td>Apagar e fechar</td><td>Remove o clipe e os seguintes avançam, fechando o buraco.</td><td><kbd>Shift</kbd>+<kbd>Delete</kbd></td><td>Ripple Delete</td></tr>'+
+ '<tr><td>▶ Reproduzir</td><td>Toca a partir da linha azul.</td><td><kbd>Espaço</kbd></td><td>Espaço</td></tr></table>'+
+ '<h3>Os 4 passos</h3><ol><li>Adicione clipes (＋ Adicionar).</li><li>Reproduza (▶) e veja no monitor.</li><li>Leve a linha azul para dentro do clipe (clique na régua) e corte.</li><li>Exporte o vídeo.</li></ol>'+
+ '<h3>Pelo teclado</h3><p><kbd>Tab</kbd> escolhe um clipe · <kbd>Enter</kbd> seleciona · <kbd>←</kbd> <kbd>→</kbd> movem (<kbd>Shift</kbd> = 1 s) · <kbd>Alt</kbd>+<kbd>←</kbd> <kbd>→</kbd> aparam o fim · <kbd>↑</kbd> <kbd>↓</kbd> mudam de camada.</p>';
+document.body.appendChild(cola);
+bcola.onclick=()=>cola.style.display='block';
+$('#cpr').onclick=()=>print();$('#ccl').onclick=()=>cola.style.display='none';
+addEventListener('keydown',e=>{if(e.key==='Escape'){cola.style.display='none';ls.style.display='none';lsOpen=false}});
+
+window.EE={runDemo,NEXT,sync6,showLost};
+sync6();render();
+})();
 </script></body></html>
